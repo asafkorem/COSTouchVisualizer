@@ -1,0 +1,7 @@
+pod "TouchVisualizer", :path => "../TouchVisualizer.podspec"
+
+target "Demo" do
+end
+
+target "DemoTests" do
+end
