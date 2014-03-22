@@ -1,5 +1,7 @@
 # TouchVisualizer
 
+![TouchVisualizer](https://github.com/conopsys/TouchVisualizer/master/touchvisdemo.gif "TouchVisualizer iOS")
+
 [![Version](http://cocoapod-badges.herokuapp.com/v/TouchVisualizer/badge.png)](http://cocoadocs.org/docsets/TouchVisualizer)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/TouchVisualizer/badge.png)](http://cocoadocs.org/docsets/TouchVisualizer)
 
