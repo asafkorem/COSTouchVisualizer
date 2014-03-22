@@ -20,7 +20,12 @@
 - (COSTouchVisualizerWindow *)window
 {
   static COSTouchVisualizerWindow *customWindow = nil;
-  if (!customWindow) customWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  if (!customWindow) {
+    customWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [customWindow setFillColor:[UIColor yellowColor]];
+    [customWindow setStrokeColor:[UIColor purpleColor]];
+    [customWindow setTouchAlpha:0.4];
+  }
   return customWindow;
 }
 

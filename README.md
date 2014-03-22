@@ -1,6 +1,6 @@
 # TouchVisualizer
 
-![TouchVisualizer](https://github.com/conopsys/TouchVisualizer/master/touchvisdemo.gif "TouchVisualizer iOS")
+![TouchVisualizer](https://github.com/conopsys/TouchVisualizer/master/flappy-b.gif "TouchVisualizer iOS")
 
 [![Version](http://cocoapod-badges.herokuapp.com/v/TouchVisualizer/badge.png)](http://cocoadocs.org/docsets/TouchVisualizer)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/TouchVisualizer/badge.png)](http://cocoadocs.org/docsets/TouchVisualizer)
@@ -42,6 +42,16 @@ To run the example project; clone the repo, and run `pod install` from the Examp
     ...
 
 }
+```
+
+**Customization**
+
+```objective-c
+// Add these lines after the windows is initialized
+    [customWindow setFillColor:[UIColor yellowColor]];
+    [customWindow setStrokeColor:[UIColor purpleColor]];
+    [customWindow setTouchAlpha:0.4];
+
 ```
 
 ## Requirements
