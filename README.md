@@ -7,6 +7,41 @@
 
 To run the example project; clone the repo, and run `pod install` from the Example directory first.
 
+**With Storyboards**
+
+ in your `AppDelegate` implementation simply add the following getter
+
+```objective-c
+#import <COSTouchVisualizerWindow.h>
+
+...
+
+// Add this method to your AppDelegate method
+- (COSTouchVisualizerWindow *)window
+{
+    static COSTouchVisualizerWindow *customWindow = nil;
+    if (!customWindow) customWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    return customWindow;
+}
+```
+
+**Without Storyboards**
+```objective-c
+#import <COSTouchVisualizerWindow.h>
+
+...
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    // Setup window
+    self.window = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+
+    ...
+
+}
+```
+
 ## Requirements
 
 ## Installation
@@ -23,4 +58,3 @@ Joe Blau, josephblau@gmail.com
 ## License
 
 TouchVisualizer is available under the MIT license. See the LICENSE file for more info.
-

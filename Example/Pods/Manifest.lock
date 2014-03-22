@@ -1,0 +1,14 @@
+PODS:
+  - TouchVisualizer (0.1.0)
+
+DEPENDENCIES:
+  - TouchVisualizer (from `../TouchVisualizer.podspec`)
+
+EXTERNAL SOURCES:
+  TouchVisualizer:
+    :path: ../TouchVisualizer.podspec
+
+SPEC CHECKSUMS:
+  TouchVisualizer: 94db8af822148de722b5eeb5b6b7efc33332069a
+
+COCOAPODS: 0.29.0
