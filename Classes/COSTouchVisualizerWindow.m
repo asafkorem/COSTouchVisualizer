@@ -30,6 +30,7 @@
 @property (nonatomic, strong) UIWindow *overlayWindow;
 @property (nonatomic, assign) BOOL active;
 @property (nonatomic, assign) BOOL fingerTipRemovalScheduled;
+@property (nonatomic, strong) NSTimer* timer;
 
 - (void)COSTouchVisualizerWindow_commonInit;
 - (BOOL)anyScreenIsMirrored;
@@ -231,6 +232,7 @@
           COSTouchSpotView *touchView = (COSTouchSpotView *)[self.overlayWindow.rootViewController.view viewWithTag:touch.hash];
           
           if (touch.phase != UITouchPhaseStationary && touchView != nil && [touchView isFadingOut]) {
+            [self.timer invalidate];
             [touchView removeFromSuperview];
             touchView = nil;
           }
@@ -238,6 +240,8 @@
           if (touchView == nil && touch.phase != UITouchPhaseStationary) {
             touchView = [[COSTouchSpotView alloc] initWithImage:self.touchImage];
             [self.overlayWindow.rootViewController.view addSubview:touchView];
+
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(performMorph:) userInfo:touchView repeats:YES];
           }
           
           if (![touchView isFadingOut]) {
@@ -359,6 +363,35 @@
   }
   
   return NO;
+}
+
+- (void)performMorph:(NSTimer*)theTimer {
+  UIView *view = (UIView*)[theTimer userInfo];
+  NSTimeInterval duration = .4;
+  NSTimeInterval delay = 0;
+  // Start
+  view.transform = CGAffineTransformMakeScale(1, 1);
+  [UIView animateKeyframesWithDuration:duration/4 delay:delay options:0 animations:^{
+    // End
+    view.transform = CGAffineTransformMakeScale(1, 1.2);
+  } completion:^(BOOL finished) {
+    [UIView animateKeyframesWithDuration:duration/4 delay:0 options:0 animations:^{
+      // End
+      view.transform = CGAffineTransformMakeScale(1.2, 0.9);
+    } completion:^(BOOL finished) {
+      [UIView animateKeyframesWithDuration:duration/4 delay:0 options:0 animations:^{
+        // End
+        view.transform = CGAffineTransformMakeScale(0.9, 0.9);
+      } completion:^(BOOL finished) {
+        [UIView animateKeyframesWithDuration:duration/4 delay:0 options:0 animations:^{
+          // End
+          view.transform = CGAffineTransformMakeScale(1, 1);
+        } completion:^(BOOL finished) {
+          
+        }];
+      }];
+    }];
+  }];
 }
 
 @end
