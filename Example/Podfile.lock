@@ -1,14 +1,14 @@
 PODS:
-  - TouchVisualizer (0.1.0)
+  - COSTouchVisualizer (0.1.0)
 
 DEPENDENCIES:
-  - TouchVisualizer (from `../TouchVisualizer.podspec`)
+  - COSTouchVisualizer (from `../COSTouchVisualizer.podspec`)
 
 EXTERNAL SOURCES:
-  TouchVisualizer:
-    :path: ../TouchVisualizer.podspec
+  COSTouchVisualizer:
+    :path: ../COSTouchVisualizer.podspec
 
 SPEC CHECKSUMS:
-  TouchVisualizer: 94db8af822148de722b5eeb5b6b7efc33332069a
+  COSTouchVisualizer: 41d7ccb9beac84e52af1cef9274541bac945ba9d
 
 COCOAPODS: 0.29.0

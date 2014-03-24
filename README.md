@@ -1,9 +1,9 @@
-# TouchVisualizer
+# COSTouchVisualizer
 
-![TouchVisualizer](https://raw.githubusercontent.com/conopsys/TouchVisualizer/master/touchvisdemo.gif "TouchVisualizer iOS")
+![COSTouchVisualizer](https://raw.githubusercontent.com/conopsys/COSTouchVisualizer/master/touchvisdemo.gif "COSTouchVisualizer iOS")
 
-[![Version](http://cocoapod-badges.herokuapp.com/v/TouchVisualizer/badge.png)](http://cocoadocs.org/docsets/TouchVisualizer)
-[![Platform](http://cocoapod-badges.herokuapp.com/p/TouchVisualizer/badge.png)](http://cocoadocs.org/docsets/TouchVisualizer)
+[![Version](http://cocoapod-badges.herokuapp.com/v/COSTouchVisualizer/badge.png)](http://cocoadocs.org/docsets/COSTouchVisualizer)
+[![Platform](http://cocoapod-badges.herokuapp.com/p/COSTouchVisualizer/badge.png)](http://cocoadocs.org/docsets/COSTouchVisualizer)
 
 ## Usage
 
@@ -58,10 +58,10 @@ To run the example project; clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
-TouchVisualizer is available through [CocoaPods](http://cocoapods.org), to install
+COSTouchVisualizer is available through [CocoaPods](http://cocoapods.org), to install
 it simply add the following line to your Podfile:
 
-    pod "TouchVisualizer"
+    pod "COSTouchVisualizer"
 
 ## Author
 
@@ -69,4 +69,4 @@ Joe Blau, josephblau@gmail.com
 
 ## License
 
-TouchVisualizer is available under the MIT license. See the LICENSE file for more info.
+COSTouchVisualizer is available under the MIT license. See the LICENSE file for more info.

@@ -1,1 +1,1 @@
-pod "TouchVisualizer", :path => "../TouchVisualizer.podspec"
+pod "COSTouchVisualizer", :path => "../COSTouchVisualizer.podspec"

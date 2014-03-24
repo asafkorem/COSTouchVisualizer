@@ -1,4 +1,4 @@
-# TouchVisualizer CHANGELOG
+# COSTouchVisualizer CHANGELOG
 
 ## 0.1.0
 

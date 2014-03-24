@@ -1,7 +1,7 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
-## TouchVisualizer
+## COSTouchVisualizer
 
 Copyright (c) 2014 Joe Blau <josephblau@gmail.com>
 
