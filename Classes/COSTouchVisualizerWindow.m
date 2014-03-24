@@ -4,16 +4,15 @@
 //
 //  Created by Joe Blau on 3/22/14.
 //
-//
 
 #import "COSTouchVisualizerWindow.h"
 
 // Turn this on to debug touches during development.
 
 #ifdef TARGET_IPHONE_SIMULATOR
-#define DEBUG_FINGERTIP_WINDOW 0
+#define DEBUG_FINGERTIP_WINDOW 1
 #else
-#define DEBUG_FINGERTIP_WINDOW 0
+#define DEBUG_FINGERTIP_WINDOW 1
 #endif
 
 @interface COSTouchSpotView : UIImageView
@@ -47,9 +46,15 @@
 
 @implementation COSTouchVisualizerWindow
 
+
 @synthesize touchImage = _touchImage;
 @synthesize touchAlpha = _touchAlpha;
 @synthesize fadeDuration = _fadeDuration;
+
+@synthesize rippleImage = _rippleImage;
+@synthesize rippleAlpha = _rippleAlpha;
+@synthesize rippleFadeDuration = _rippleFadeDuration;
+
 @synthesize overlayWindow = _overlayWindow;
 @synthesize active = _active;
 @synthesize fingerTipRemovalScheduled = _fingerTipRemovalScheduled;
@@ -72,6 +77,9 @@
   self.strokeColor = [UIColor blackColor];
   self.fillColor = [UIColor whiteColor];
   
+  self.rippleStrokeColor = [UIColor blueColor];
+  self.rippleStrokeColor = [UIColor whiteColor];
+  
   self.overlayWindow = [[UIWindow alloc] initWithFrame:self.frame];
   self.overlayWindow.rootViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
   self.overlayWindow.userInteractionEnabled = NO;
@@ -81,6 +89,9 @@
   
   self.touchAlpha   = 0.5;
   self.fadeDuration = 0.3;
+  
+  self.rippleAlpha = 0.2;
+  self.rippleFadeDuration = 0.2;
   
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(screenConnect:)
@@ -100,7 +111,6 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidConnectNotification    object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidDisconnectNotification object:nil];
 }
-
 #pragma mark -
 
 - (UIImage *)touchImage {
@@ -129,6 +139,32 @@
     UIGraphicsEndImageContext();
   }
   return _touchImage;
+}
+
+- (UIImage *)rippleImage {
+  UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 50.0, 50.0)];
+  
+  UIGraphicsBeginImageContextWithOptions(clipPath.bounds.size, NO, 0);
+  
+  UIBezierPath *drawPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(25.0, 25.0)
+                                                          radius:22.0
+                                                      startAngle:0
+                                                        endAngle:2 * M_PI
+                                                       clockwise:YES];
+  
+  drawPath.lineWidth = 2.0;
+  
+  [[UIColor whiteColor] setStroke];
+  [[UIColor redColor] setFill];
+  
+  [drawPath stroke];
+  [drawPath fill];
+  
+  [clipPath addClip];
+  
+  _rippleImage = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return _rippleImage;
 }
 
 #pragma mark -
@@ -169,6 +205,27 @@
       switch (touch.phase) {
         case UITouchPhaseBegan:
         case UITouchPhaseMoved:
+        {
+          // Generate ripples
+          COSTouchSpotView *rippleView = (COSTouchSpotView *)[self.overlayWindow.rootViewController.view viewWithTag:touch.hash];
+          
+          rippleView = [[COSTouchSpotView alloc] initWithImage:self.rippleImage];
+          [self.overlayWindow.rootViewController.view addSubview:rippleView];
+          
+          rippleView.alpha = self.rippleAlpha;
+          rippleView.center = [touch locationInView:self.overlayWindow.rootViewController.view];
+          
+          [UIView animateWithDuration:self.rippleFadeDuration
+                                delay:0.0
+                              options:UIViewAnimationOptionCurveEaseIn // See other options
+                           animations:^{
+                             [rippleView setAlpha:0.0];
+                             [rippleView setFrame:CGRectInset(rippleView.frame, 25, 25)];
+                           }
+                           completion:^(BOOL finished) {
+                             [rippleView removeFromSuperview];
+                           }];
+        }
         case UITouchPhaseStationary:
         {
           COSTouchSpotView *touchView = (COSTouchSpotView *)[self.overlayWindow.rootViewController.view viewWithTag:touch.hash];
