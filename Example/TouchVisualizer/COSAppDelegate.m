@@ -25,6 +25,10 @@
     [customWindow setFillColor:[UIColor yellowColor]];
     [customWindow setStrokeColor:[UIColor purpleColor]];
     [customWindow setTouchAlpha:0.4];
+    
+    [customWindow setRippleFillColor:[UIColor yellowColor]];
+    [customWindow setRippleStrokeColor:[UIColor purpleColor]];
+    [customWindow setRippleAlpha:0.1];
   }
   return customWindow;
 }

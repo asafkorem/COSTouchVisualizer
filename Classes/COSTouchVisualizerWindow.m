@@ -10,9 +10,9 @@
 // Turn this on to debug touches during development.
 
 #ifdef TARGET_IPHONE_SIMULATOR
-#define DEBUG_FINGERTIP_WINDOW 0
+#define DEBUG_FINGERTIP_WINDOW 1
 #else
-#define DEBUG_FINGERTIP_WINDOW 0
+#define DEBUG_FINGERTIP_WINDOW 1
 #endif
 
 @interface COSTouchSpotView : UIImageView
@@ -78,8 +78,8 @@
   self.strokeColor = [UIColor blackColor];
   self.fillColor = [UIColor whiteColor];
   
-  self.rippleStrokeColor = [UIColor blueColor];
   self.rippleStrokeColor = [UIColor whiteColor];
+  self.rippleFillColor = [UIColor blueColor];
   
   self.overlayWindow = [[UIWindow alloc] initWithFrame:self.frame];
   self.overlayWindow.rootViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
@@ -155,8 +155,8 @@
   
   drawPath.lineWidth = 2.0;
   
-  [[UIColor whiteColor] setStroke];
-  [[UIColor redColor] setFill];
+  [self.rippleStrokeColor setStroke];
+  [self.rippleFillColor setFill];
   
   [drawPath stroke];
   [drawPath fill];
