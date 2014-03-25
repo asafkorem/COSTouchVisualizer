@@ -44,14 +44,30 @@ To run the example project; clone the repo, and run `pod install` from the Examp
 }
 ```
 
+**Debugging Mode**
+
+To enable debugging mode, edit the `COSTouchVisualizerWindow.m` file in the Pods Project under Pods/COSTouchVisualizerWindow/COSTouchVisualizerWindow.m
+
+```objective-c
+#ifdef TARGET_IPHONE_SIMULATOR
+#define DEBUG_FINGERTIP_WINDOW 0
+#else
+#define DEBUG_FINGERTIP_WINDOW 0
+#endif
+```
+
 **Customization**
 
 ```objective-c
 // Add these lines after the windows is initialized
-    [customWindow setFillColor:[UIColor yellowColor]];
-    [customWindow setStrokeColor:[UIColor purpleColor]];
-    [customWindow setTouchAlpha:0.4];
-
+// Touch Color
+[customWindow setFillColor:[UIColor yellowColor]];
+[customWindow setStrokeColor:[UIColor purpleColor]];
+[customWindow setTouchAlpha:0.4];
+// Ripple Color
+[customWindow setRippleFillColor:[UIColor yellowColor]];
+[customWindow setRippleStrokeColor:[UIColor purpleColor]];
+[customWindow setRippleAlpha:0.1];
 ```
 
 ## Requirements
