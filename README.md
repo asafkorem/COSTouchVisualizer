@@ -72,6 +72,8 @@ To enable debugging mode, edit the `COSTouchVisualizerWindow.m` file in the Pods
 
 ## Requirements
 
+This project requires ARC.
+
 ## Installation
 
 COSTouchVisualizer is available through [CocoaPods](http://cocoapods.org), to install
