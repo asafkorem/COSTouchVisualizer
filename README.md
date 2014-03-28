@@ -7,7 +7,7 @@
 
 ## Usage
 
-To run the example project; clone the repo, and run `pod install` from the Example directory first.
+To run the example project; clone the repo, and run `pod update` from the Example directory first.  By default, this project has `Debug Mode` disabled.  If you want to see the gestures while you're testing, follow the **Debugging Mode** instructions.
 
 **With Storyboards**
 
