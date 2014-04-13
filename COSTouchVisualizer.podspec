@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "COSTouchVisualizer"
-  s.version          = "1.0.1"
+  s.version          = "1.0.2"
   s.summary          = "Visualize iOS finger touches, gestures and holds on external displays"
   s.description      = <<-DESC
 			Touch Screen Visualizer visualizes your touches, gestures, and holds on
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/conopsys/COSTouchVisualizer.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/joe_blau'
 
-  s.platform     = :ios, '5.0'
+  s.platform     = :ios, '6.0'
 
   s.requires_arc = true
 

@@ -370,20 +370,21 @@
   NSTimeInterval duration = .4;
   NSTimeInterval delay = 0;
   // Start
+  view.alpha = _touchAlpha;
   view.transform = CGAffineTransformMakeScale(1, 1);
-  [UIView animateKeyframesWithDuration:duration/4 delay:delay options:0 animations:^{
+  [UIView animateWithDuration:duration/4 delay:delay options:0 animations:^{
     // End
     view.transform = CGAffineTransformMakeScale(1, 1.2);
   } completion:^(BOOL finished) {
-    [UIView animateKeyframesWithDuration:duration/4 delay:0 options:0 animations:^{
+    [UIView animateWithDuration:duration/4 delay:0 options:0 animations:^{
       // End
       view.transform = CGAffineTransformMakeScale(1.2, 0.9);
     } completion:^(BOOL finished) {
-      [UIView animateKeyframesWithDuration:duration/4 delay:0 options:0 animations:^{
+      [UIView animateWithDuration:duration/4 delay:0 options:0 animations:^{
         // End
         view.transform = CGAffineTransformMakeScale(0.9, 0.9);
       } completion:^(BOOL finished) {
-        [UIView animateKeyframesWithDuration:duration/4 delay:0 options:0 animations:^{
+        [UIView animateWithDuration:duration/4 delay:0 options:0 animations:^{
           // End
           view.transform = CGAffineTransformMakeScale(1, 1);
         } completion:^(BOOL finished) {
