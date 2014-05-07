@@ -209,9 +209,10 @@
         {
           // Generate ripples
           COSTouchSpotView *rippleView = (COSTouchSpotView *)[self.overlayWindow.rootViewController.view viewWithTag:touch.hash];
-          
-          rippleView = [[COSTouchSpotView alloc] initWithImage:self.rippleImage];
-          [self.overlayWindow.rootViewController.view addSubview:rippleView];
+          if(!rippleView){
+            rippleView = [[COSTouchSpotView alloc] initWithImage:self.rippleImage];
+            [self.overlayWindow.rootViewController.view addSubview:rippleView];
+          }
           
           rippleView.alpha = self.rippleAlpha;
           rippleView.center = [touch locationInView:self.overlayWindow.rootViewController.view];
