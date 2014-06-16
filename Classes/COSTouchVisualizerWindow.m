@@ -93,7 +93,9 @@
   
   self.rippleAlpha = 0.2;
   self.rippleFadeDuration = 0.2;
-  
+
+  self.stationaryMorphEnabled = YES;
+	
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(screenConnect:)
                                                name:UIScreenDidConnectNotification
@@ -239,7 +241,9 @@
             touchView = [[COSTouchSpotView alloc] initWithImage:self.touchImage];
             [self.overlayWindow.rootViewController.view addSubview:touchView];
 
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(performMorph:) userInfo:touchView repeats:YES];
+            if (self.stationaryMorphEnabled) {
+			  self.timer = [NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(performMorph:) userInfo:touchView repeats:YES];
+            }
           }
           
           if (![touchView isFadingOut]) {
