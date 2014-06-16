@@ -23,4 +23,6 @@
 @property (nonatomic, strong) UIColor *rippleStrokeColor;
 @property (nonatomic, strong) UIColor *rippleFillColor;
 
+@property (nonatomic) BOOL stationaryMorphEnabled;	// default: YES
+
 @end
