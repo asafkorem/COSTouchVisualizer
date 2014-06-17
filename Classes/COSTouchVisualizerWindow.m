@@ -81,13 +81,6 @@
   self.rippleStrokeColor = [UIColor whiteColor];
   self.rippleFillColor = [UIColor blueColor];
   
-  self.overlayWindow = [[UIWindow alloc] initWithFrame:self.frame];
-  self.overlayWindow.rootViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
-  self.overlayWindow.userInteractionEnabled = NO;
-  self.overlayWindow.windowLevel = UIWindowLevelStatusBar;
-  self.overlayWindow.backgroundColor = [UIColor clearColor];
-  self.overlayWindow.hidden = NO;
-  
   self.touchAlpha   = 0.5;
   self.fadeDuration = 0.3;
   
@@ -114,6 +107,7 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidConnectNotification    object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidDisconnectNotification object:nil];
 }
+
 #pragma mark -
 
 - (UIImage *)touchImage {
@@ -211,10 +205,10 @@
         {
           // Generate ripples
           COSTouchSpotView *rippleView  = [[COSTouchSpotView alloc] initWithImage:self.rippleImage];
-            [self.overlayWindow.rootViewController.view addSubview:rippleView];
+            [self.overlayWindow addSubview:rippleView];
 
           rippleView.alpha = self.rippleAlpha;
-          rippleView.center = [touch locationInView:self.overlayWindow.rootViewController.view];
+          rippleView.center = [touch locationInView:self.overlayWindow];
           
           [UIView animateWithDuration:self.rippleFadeDuration
                                 delay:0.0
@@ -229,7 +223,7 @@
         }
         case UITouchPhaseStationary:
         {
-          COSTouchSpotView *touchView = (COSTouchSpotView *)[self.overlayWindow.rootViewController.view viewWithTag:touch.hash];
+          COSTouchSpotView *touchView = (COSTouchSpotView *)[self.overlayWindow viewWithTag:touch.hash];
           
           if (touch.phase != UITouchPhaseStationary && touchView != nil && [touchView isFadingOut]) {
             [self.timer invalidate];
@@ -239,7 +233,7 @@
           
           if (touchView == nil && touch.phase != UITouchPhaseStationary) {
             touchView = [[COSTouchSpotView alloc] initWithImage:self.touchImage];
-            [self.overlayWindow.rootViewController.view addSubview:touchView];
+            [self.overlayWindow addSubview:touchView];
 
             if (self.stationaryMorphEnabled) {
 			  self.timer = [NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(performMorph:) userInfo:touchView repeats:YES];
@@ -248,7 +242,7 @@
           
           if (![touchView isFadingOut]) {
             touchView.alpha = self.touchAlpha;
-            touchView.center = [touch locationInView:self.overlayWindow.rootViewController.view];
+            touchView.center = [touch locationInView:self.overlayWindow];
             touchView.tag = touch.hash;
             touchView.timestamp = touch.timestamp;
             touchView.shouldAutomaticallyRemoveAfterTimeout = [self shouldAutomaticallyRemoveFingerTipForTouch:touch];
@@ -274,6 +268,18 @@
 #pragma mark -
 #pragma mark Private
 
+- (UIWindow *)overlayWindow {
+  if (!_overlayWindow) {
+    _overlayWindow = [[UIWindow alloc] initWithFrame:self.frame];
+    _overlayWindow.userInteractionEnabled = NO;
+    _overlayWindow.windowLevel = UIWindowLevelStatusBar;
+    _overlayWindow.backgroundColor = [UIColor clearColor];
+    _overlayWindow.hidden = NO;
+  }
+
+  return _overlayWindow;
+}
+
 - (void)scheduleFingerTipRemoval {
   if (self.fingerTipRemovalScheduled) return;
   self.fingerTipRemovalScheduled = YES;
@@ -291,19 +297,19 @@
   NSTimeInterval now = [[NSProcessInfo processInfo] systemUptime];
   const CGFloat REMOVAL_DELAY = 0.2;
   
-  for (COSTouchSpotView *touchView in [self.overlayWindow.rootViewController.view subviews]) {
+  for (COSTouchSpotView *touchView in [self.overlayWindow subviews]) {
     if (![touchView isKindOfClass:[COSTouchSpotView class]]) continue;
     
     if (touchView.shouldAutomaticallyRemoveAfterTimeout && now > touchView.timestamp + REMOVAL_DELAY)
       [self removeFingerTipWithHash:touchView.tag animated:YES];
   }
   
-  if ([[self.overlayWindow.rootViewController.view subviews] count])
+  if ([[self.overlayWindow subviews] count])
     [self scheduleFingerTipRemoval];
 }
 
 - (void)removeFingerTipWithHash:(NSUInteger)hash animated:(BOOL)animated {
-  COSTouchSpotView *touchView = (COSTouchSpotView *)[self.overlayWindow.rootViewController.view viewWithTag:hash];
+  COSTouchSpotView *touchView = (COSTouchSpotView *)[self.overlayWindow viewWithTag:hash];
   if (touchView == nil)
     return;
   
