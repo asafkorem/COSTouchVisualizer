@@ -5,12 +5,28 @@
 [![Version](http://cocoapod-badges.herokuapp.com/v/COSTouchVisualizer/badge.png)](http://cocoadocs.org/docsets/COSTouchVisualizer)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/COSTouchVisualizer/badge.png)](http://cocoadocs.org/docsets/COSTouchVisualizer)
 
-## Usage
+## Swift Usage
+
+Using COSTouchVisualizer is possible with Swift.  Inside your AppDelegate, redefine your window and declare a visualizer window with storyboards.
+
+**With Storyboards**
+```swift
+class AppDelegate: UIResponder {
+  var visWindow: COSTouchVisualizerWindow?
+  var window: COSTouchVisualizerWindow? {
+    if visWindow == nil { visWindow = COSTouchVisualizerWindow(frame: UIScreen.mainScreen().bounds) }
+    return visWindow
+  }
+...
+}
+```
+**Without Storyboards**
+
+## Objective-C Usage
 
 To run the example project; clone the repo, and run `pod update` from the Example directory first.  By default, this project has `Debug Mode` disabled.  If you want to see the gestures while you're testing, follow the **Debugging Mode** instructions.
 
 **With Storyboards**
-
  in your `AppDelegate` implementation simply add the following getter
 
 ```objective-c
@@ -21,9 +37,9 @@ To run the example project; clone the repo, and run `pod update` from the Exampl
 // Add this method to your AppDelegate method
 - (COSTouchVisualizerWindow *)window
 {
-    static COSTouchVisualizerWindow *customWindow = nil;
-    if (!customWindow) customWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    return customWindow;
+    static COSTouchVisualizerWindow *visWindow = nil;
+    if (!visWindow) visWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    return visWindow;
 }
 ```
 
@@ -61,13 +77,13 @@ To enable debugging mode, edit the `COSTouchVisualizerWindow.m` file in the Pods
 ```objective-c
 // Add these lines after the windows is initialized
 // Touch Color
-[customWindow setFillColor:[UIColor yellowColor]];
-[customWindow setStrokeColor:[UIColor purpleColor]];
-[customWindow setTouchAlpha:0.4];
+[visWindow setFillColor:[UIColor yellowColor]];
+[visWindow setStrokeColor:[UIColor purpleColor]];
+[visWindow setTouchAlpha:0.4];
 // Ripple Color
-[customWindow setRippleFillColor:[UIColor yellowColor]];
-[customWindow setRippleStrokeColor:[UIColor purpleColor]];
-[customWindow setRippleAlpha:0.1];
+[visWindow setRippleFillColor:[UIColor yellowColor]];
+[visWindow setRippleStrokeColor:[UIColor purpleColor]];
+[visWindow setRippleAlpha:0.1];
 ```
 
 ## Requirements
