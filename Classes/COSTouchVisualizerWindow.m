@@ -1,6 +1,6 @@
 //
 //  COSTouchVisualizerWindow.m
-//  
+//
 //
 //  Created by Joe Blau on 3/22/14.
 //
@@ -77,28 +77,28 @@
 - (void)COSTouchVisualizerWindow_commonInit {
   self.strokeColor = [UIColor blackColor];
   self.fillColor = [UIColor whiteColor];
-  
+
   self.rippleStrokeColor = [UIColor whiteColor];
   self.rippleFillColor = [UIColor blueColor];
-  
+
   self.touchAlpha   = 0.5;
   self.fadeDuration = 0.3;
-  
+
   self.rippleAlpha = 0.2;
   self.rippleFadeDuration = 0.2;
 
   self.stationaryMorphEnabled = YES;
-	
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(screenConnect:)
                                                name:UIScreenDidConnectNotification
                                              object:nil];
-  
+
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(screenDisconnect:)
                                                name:UIScreenDidDisconnectNotification
                                              object:nil];
-  
+
   // Set up active now, in case the screen was present before the window was created (or application launched).
   [self updateFingertipsAreActive];
 }
@@ -113,9 +113,9 @@
 - (UIImage *)touchImage {
   if (!_touchImage) {
     UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 50.0, 50.0)];
-    
+
     UIGraphicsBeginImageContextWithOptions(clipPath.bounds.size, NO, 0);
-    
+
     UIBezierPath *drawPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(25.0, 25.0)
                                                             radius:22.0
                                                         startAngle:0
@@ -123,15 +123,15 @@
                                                          clockwise:YES];
 
     drawPath.lineWidth = 2.0;
-    
+
     [self.strokeColor setStroke];
     [self.fillColor setFill];
-    
+
     [drawPath stroke];
     [drawPath fill];
-    
+
     [clipPath addClip];
-    
+
     _touchImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
   }
@@ -139,28 +139,30 @@
 }
 
 - (UIImage *)rippleImage {
-  UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 50.0, 50.0)];
-  
-  UIGraphicsBeginImageContextWithOptions(clipPath.bounds.size, NO, 0);
-  
-  UIBezierPath *drawPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(25.0, 25.0)
-                                                          radius:22.0
-                                                      startAngle:0
-                                                        endAngle:2 * M_PI
-                                                       clockwise:YES];
-  
-  drawPath.lineWidth = 2.0;
-  
-  [self.rippleStrokeColor setStroke];
-  [self.rippleFillColor setFill];
-  
-  [drawPath stroke];
-  [drawPath fill];
-  
-  [clipPath addClip];
-  
-  _rippleImage = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
+  if (!_rippleImage) {
+    UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 50.0, 50.0)];
+
+    UIGraphicsBeginImageContextWithOptions(clipPath.bounds.size, NO, 0);
+
+    UIBezierPath *drawPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(25.0, 25.0)
+                                                            radius:22.0
+                                                        startAngle:0
+                                                          endAngle:2 * M_PI
+                                                         clockwise:YES];
+
+    drawPath.lineWidth = 2.0;
+
+    [self.rippleStrokeColor setStroke];
+    [self.rippleFillColor setFill];
+
+    [drawPath stroke];
+    [drawPath fill];
+
+    [clipPath addClip];
+
+    _rippleImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+  }
   return _rippleImage;
 }
 
@@ -177,7 +179,7 @@
 
 - (BOOL)anyScreenIsMirrored {
   if (![UIScreen instancesRespondToSelector:@selector(mirroredScreen)]) return NO;
-  
+
   for (UIScreen *screen in [UIScreen screens]) {
     if ([screen mirroredScreen] != nil) return YES;
   }
@@ -209,7 +211,7 @@
 
           rippleView.alpha = self.rippleAlpha;
           rippleView.center = [touch locationInView:self.overlayWindow];
-          
+
           [UIView animateWithDuration:self.rippleFadeDuration
                                 delay:0.0
                               options:UIViewAnimationOptionCurveEaseIn // See other options
@@ -224,13 +226,13 @@
         case UITouchPhaseStationary:
         {
           COSTouchSpotView *touchView = (COSTouchSpotView *)[self.overlayWindow viewWithTag:touch.hash];
-          
+
           if (touch.phase != UITouchPhaseStationary && touchView != nil && [touchView isFadingOut]) {
             [self.timer invalidate];
             [touchView removeFromSuperview];
             touchView = nil;
           }
-          
+
           if (touchView == nil && touch.phase != UITouchPhaseStationary) {
             touchView = [[COSTouchSpotView alloc] initWithImage:self.touchImage];
             [self.overlayWindow addSubview:touchView];
@@ -239,7 +241,7 @@
 			  self.timer = [NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(performMorph:) userInfo:touchView repeats:YES];
             }
           }
-          
+
           if (![touchView isFadingOut]) {
             touchView.alpha = self.touchAlpha;
             touchView.center = [touch locationInView:self.overlayWindow];
@@ -249,7 +251,7 @@
           }
           break;
         }
-          
+
         case UITouchPhaseEnded:
         case UITouchPhaseCancelled:
         {
@@ -259,9 +261,9 @@
       }
     }
   }
-  
+
   [super sendEvent:event];
-  
+
   [self scheduleFingerTipRemoval]; // We may not see all UITouchPhaseEnded/UITouchPhaseCancelled events.
 }
 
@@ -293,17 +295,17 @@
 
 - (void)removeInactiveFingerTips {
   self.fingerTipRemovalScheduled = NO;
-  
+
   NSTimeInterval now = [[NSProcessInfo processInfo] systemUptime];
   const CGFloat REMOVAL_DELAY = 0.2;
-  
+
   for (COSTouchSpotView *touchView in [self.overlayWindow subviews]) {
     if (![touchView isKindOfClass:[COSTouchSpotView class]]) continue;
-    
+
     if (touchView.shouldAutomaticallyRemoveAfterTimeout && now > touchView.timestamp + REMOVAL_DELAY)
       [self removeFingerTipWithHash:touchView.tag animated:YES];
   }
-  
+
   if ([[self.overlayWindow subviews] count])
     [self scheduleFingerTipRemoval];
 }
@@ -312,29 +314,29 @@
   COSTouchSpotView *touchView = (COSTouchSpotView *)[self.overlayWindow viewWithTag:hash];
   if (touchView == nil)
     return;
-  
+
   if ([touchView isFadingOut]) return;
-  
+
   BOOL animationsWereEnabled = [UIView areAnimationsEnabled];
-  
+
   if (animated) {
     [UIView setAnimationsEnabled:YES];
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:self.fadeDuration];
   }
-  
+
   touchView.frame = CGRectMake(touchView.center.x - touchView.frame.size.width,
                                touchView.center.y - touchView.frame.size.height,
                                touchView.frame.size.width  * 2,
                                touchView.frame.size.height * 2);
-  
+
   touchView.alpha = 0.0;
-  
+
   if (animated) {
     [UIView commitAnimations];
     [UIView setAnimationsEnabled:animationsWereEnabled];
   }
-  
+
   touchView.fadingOut = YES;
   [touchView performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:self.fadeDuration];
 }
@@ -352,24 +354,24 @@
   // hold events that are picked up by gesture recognizers (since we
   // don't use UITouchPhaseStationary touches for those. *sigh*). So we
   // end up with this more complicated setup.
-  
+
   UIView *view = [touch view];
   view = [view hitTest:[touch locationInView:view] withEvent:nil];
-  
+
   while (view != nil) {
     if ([view isKindOfClass:[UITableViewCell class]]) {
       for (UIGestureRecognizer *recognizer in [touch gestureRecognizers]) {
         if ([recognizer isKindOfClass:[UISwipeGestureRecognizer class]]) return YES;
       }
     }
-    
+
     if ([view isKindOfClass:[UITableView class]]) {
       if ([[touch gestureRecognizers] count] == 0) return YES;
     }
-    
+
     view = view.superview;
   }
-  
+
   return NO;
 }
 
@@ -396,7 +398,7 @@
           // End
           view.transform = CGAffineTransformMakeScale(1, 1);
         } completion:^(BOOL finished) {
-          
+
         }];
       }];
     }];
