@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "COSTouchVisualizer"
-  s.version          = "1.0.2"
+  s.version          = "1.0.3"
   s.summary          = "Visualize iOS finger touches, gestures and holds on external displays"
   s.description      = <<-DESC
 			Touch Screen Visualizer visualizes your touches, gestures, and holds on
