@@ -12,11 +12,9 @@ Using COSTouchVisualizer is possible with Swift.  Inside your AppDelegate, redef
 **With Storyboards**
 ```swift
 class AppDelegate: UIResponder {
-  var visWindow: COSTouchVisualizerWindow?
-  var window: COSTouchVisualizerWindow? {
-    if visWindow == nil { visWindow = COSTouchVisualizerWindow(frame: UIScreen.mainScreen().bounds) }
-    return visWindow
-  }
+  lazy var window: COSTouchVisualizerWindow? = {
+    COSTouchVisualizerWindow(frame: UIScreen.mainScreen().bounds)
+  }()
 ...
 }
 ```
