@@ -80,11 +80,6 @@
     self.stationaryMorphEnabled = YES;
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidConnectNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidDisconnectNotification object:nil];
-}
-
 #pragma mark -
 
 - (UIImage *)touchImage {
