@@ -58,16 +58,52 @@ To run the example project; clone the repo, and run `pod update` from the Exampl
 }
 ```
 
-**Debugging Mode**
+**Delegate**
 
-To enable debugging mode, edit the `COSTouchVisualizerWindow.m` file in the Pods Project under Pods/COSTouchVisualizerWindow/COSTouchVisualizerWindow.m
+To make the window change active status dynamically or to enable debugging mode, you could make an object
+implements the ```COSTouchVisualizerWindowDelegate``` protocol.
+
+Here are 2 optional methods in this delegate protocol:
+```objective-c
+- (BOOL)touchVisualizerWindowShouldShowFingertip:(COSTouchVisualizerWindow *)window;
+- (BOOL)touchVisualizerWindowShouldAlwaysShowFingertip:(COSTouchVisualizerWindow *)window;
+```
+
+By default, the window only shows fingertip when there is a mirrored window.
+
+The first delegate method (```-touchVisualizerWindowShouldShowFingertip:```) tells the window to enable
+fingertip or not. You should return ```YES``` to enable the fingertip feature, or ```NO``` if you want to close this
+feature.
+
+The second method (```-touchVisualizerWindowShouldAlwaysShowFingertip:```) tells the window to always show the
+fingertip even if there's no any mirrored screens (when returning YES). If this method returns NO, the window
+only show fingertip when connected to a mirrored screen.
 
 ```objective-c
-#ifdef TARGET_IPHONE_SIMULATOR
-#define DEBUG_FINGERTIP_WINDOW 0
-#else
-#define DEBUG_FINGERTIP_WINDOW 0
-#endif
+- (COSTouchVisualizerWindow *)window
+{
+  if (!_customWindow) {
+    _customWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    // ... other setup code
+
+    _customWindow.touchVisualizerWindowDelegate = self;
+  }
+  return _customWindow;
+}
+
+- (BOOL)touchVisualizerWindowShouldAlwaysShowFingertip:(COSTouchVisualizerWindow *)window
+{
+    return YES;  // Return YES to make the fingertip always display even if there's no any mirrored screen.
+                 // Return NO or don't implement this method if you want to keep the fingertip display only when
+                 // the device is connected to a mirrored screen.
+}
+
+- (BOOL)touchVisualizerWindowShouldShowFingertip:(COSTouchVisualizerWindow *)window
+{
+    return YES;  // Return YES or don't implement this method to make this window show fingertip when necessary.
+                 // Return NO to make this window not to show fingertip.
+}
 ```
 
 **Customization**
