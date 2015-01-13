@@ -9,6 +9,10 @@
 #import "COSAppDelegate.h"
 #import <COSTouchVisualizerWindow.h>
 
+@interface COSAppDelegate () <COSTouchVisualizerWindowDelegate>
+
+@end
+
 @implementation COSAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -29,8 +33,14 @@
     [customWindow setRippleFillColor:[UIColor yellowColor]];
     [customWindow setRippleStrokeColor:[UIColor purpleColor]];
     [customWindow setRippleAlpha:0.1];
+    [customWindow setTouchVisualizerWindowDelegate:self];
   }
   return customWindow;
+}
+
+- (BOOL)touchVisualizerWindowShouldAlwaysShowFingertip:(COSTouchVisualizerWindow *)window
+{
+    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

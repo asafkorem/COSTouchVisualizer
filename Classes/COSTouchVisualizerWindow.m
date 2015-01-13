@@ -7,14 +7,6 @@
 
 #import "COSTouchVisualizerWindow.h"
 
-// Turn this on to debug touches during development.
-
-#ifdef TARGET_IPHONE_SIMULATOR
-#define DEBUG_FINGERTIP_WINDOW 0
-#else
-#define DEBUG_FINGERTIP_WINDOW 0
-#endif
-
 @interface COSTouchSpotView : UIImageView
 
 @property (nonatomic, assign) NSTimeInterval timestamp;
@@ -28,13 +20,10 @@
 @interface COSTouchVisualizerWindow ()
 
 @property (nonatomic, strong) UIWindow *overlayWindow;
-@property (nonatomic, assign) BOOL active;
 @property (nonatomic, assign) BOOL fingerTipRemovalScheduled;
 @property (nonatomic, strong) NSTimer *timer;
 
 - (void)COSTouchVisualizerWindow_commonInit;
-- (BOOL)anyScreenIsMirrored;
-- (void)updateFingertipsAreActive;
 - (void)scheduleFingerTipRemoval;
 - (void)cancelScheduledFingerTipRemoval;
 - (void)removeInactiveFingerTips;
@@ -89,19 +78,6 @@
     self.rippleFadeDuration = 0.2;
 
     self.stationaryMorphEnabled = YES;
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(screenConnect:)
-                                                 name:UIScreenDidConnectNotification
-                                               object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(screenDisconnect:)
-                                                 name:UIScreenDidDisconnectNotification
-                                               object:nil];
-
-    // Set up active now, in case the screen was present before the window was created (or application launched).
-    [self updateFingertipsAreActive];
 }
 
 - (void)dealloc {
@@ -168,15 +144,7 @@
 }
 
 #pragma mark -
-#pragma mark Screen notifications
-
-- (void)screenConnect:(NSNotification *)notification {
-    [self updateFingertipsAreActive];
-}
-
-- (void)screenDisconnect:(NSNotification *)notification {
-    [self updateFingertipsAreActive];
-}
+#pragma mark Active
 
 - (BOOL)anyScreenIsMirrored {
     if (![UIScreen instancesRespondToSelector:@selector(mirroredScreen)])
@@ -189,12 +157,19 @@
     return NO;
 }
 
-- (void)updateFingertipsAreActive {
-#if DEBUG_FINGERTIP_WINDOW
-    self.active = YES;
-#else
-    self.active = [self anyScreenIsMirrored];
-#endif
+- (BOOL)isActive {
+    // should show fingertip or not
+    if (![self.touchVisualizerWindowDelegate
+          respondsToSelector:@selector(touchVisualizerWindowShouldShowFingertip:)] ||
+        [self.touchVisualizerWindowDelegate touchVisualizerWindowShouldShowFingertip:self]) {
+        // should always show or only when any screen is mirrored.
+        return (([self.touchVisualizerWindowDelegate
+                  respondsToSelector:@selector(touchVisualizerWindowShouldAlwaysShowFingertip:)] &&
+                 [self.touchVisualizerWindowDelegate touchVisualizerWindowShouldAlwaysShowFingertip:self]) ||
+                [self anyScreenIsMirrored]);
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark -
