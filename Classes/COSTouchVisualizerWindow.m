@@ -15,11 +15,15 @@
 
 @end
 
+@interface COSTouchOverlayWindowViewController : UIViewController
+@end
+
 #pragma mark -
 
 @interface COSTouchVisualizerWindow ()
 
 @property (nonatomic, strong) UIWindow *overlayWindow;
+@property (nonatomic, strong) UIViewController *overlayWindowViewController;
 @property (nonatomic, assign) BOOL fingerTipRemovalScheduled;
 @property (nonatomic, strong) NSTimer *timer;
 
@@ -45,6 +49,7 @@
 @synthesize rippleFadeDuration = _rippleFadeDuration;
 
 @synthesize overlayWindow = _overlayWindow;
+@synthesize overlayWindowViewController = _overlayWindowViewController;
 @synthesize active = _active;
 @synthesize fingerTipRemovalScheduled = _fingerTipRemovalScheduled;
 
@@ -250,6 +255,10 @@
         _overlayWindow.windowLevel = UIWindowLevelStatusBar;
         _overlayWindow.backgroundColor = [UIColor clearColor];
         _overlayWindow.hidden = NO;
+        
+        _overlayWindowViewController = [[COSTouchOverlayWindowViewController alloc] init];
+        [_overlayWindow setRootViewController:_overlayWindowViewController];
+        [_overlayWindowViewController setView:_overlayWindow];
     }
 
     return _overlayWindow;
@@ -403,5 +412,12 @@
 #pragma mark -
 
 @implementation COSTouchSpotView
+@end
+
+@implementation COSTouchOverlayWindowViewController 
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return [UIApplication sharedApplication].keyWindow.rootViewController.preferredStatusBarStyle;
+}
 
 @end
