@@ -433,6 +433,7 @@
 				GCC_PREFIX_HEADER = "TouchVisualizer/TouchVisualizer-Prefix.pch";
 				INFOPLIST_FILE = "TouchVisualizer/TouchVisualizer-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -447,6 +448,7 @@
 				GCC_PREFIX_HEADER = "TouchVisualizer/TouchVisualizer-Prefix.pch";
 				INFOPLIST_FILE = "TouchVisualizer/TouchVisualizer-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
