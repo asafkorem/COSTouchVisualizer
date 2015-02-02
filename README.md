@@ -33,8 +33,7 @@ To run the example project; clone the repo, and run `pod update` from the Exampl
 ...
 
 // Add this method to your AppDelegate method
-- (COSTouchVisualizerWindow *)window
-{
+- (COSTouchVisualizerWindow *)window {
     static COSTouchVisualizerWindow *visWindow = nil;
     if (!visWindow) visWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     return visWindow;
@@ -47,8 +46,7 @@ To run the example project; clone the repo, and run `pod update` from the Exampl
 
 ...
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Setup window
     self.window = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -80,8 +78,7 @@ fingertip even if there's no any mirrored screens (when returning YES). If this 
 only show fingertip when connected to a mirrored screen.
 
 ```objective-c
-- (COSTouchVisualizerWindow *)window
-{
+- (COSTouchVisualizerWindow *)window {
   if (!_customWindow) {
     _customWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
@@ -92,15 +89,13 @@ only show fingertip when connected to a mirrored screen.
   return _customWindow;
 }
 
-- (BOOL)touchVisualizerWindowShouldAlwaysShowFingertip:(COSTouchVisualizerWindow *)window
-{
+- (BOOL)touchVisualizerWindowShouldAlwaysShowFingertip:(COSTouchVisualizerWindow *)window {
     return YES;  // Return YES to make the fingertip always display even if there's no any mirrored screen.
                  // Return NO or don't implement this method if you want to keep the fingertip display only when
                  // the device is connected to a mirrored screen.
 }
 
-- (BOOL)touchVisualizerWindowShouldShowFingertip:(COSTouchVisualizerWindow *)window
-{
+- (BOOL)touchVisualizerWindowShouldShowFingertip:(COSTouchVisualizerWindow *)window {
     return YES;  // Return YES or don't implement this method to make this window show fingertip when necessary.
                  // Return NO to make this window not to show fingertip.
 }
