@@ -6,8 +6,5 @@
 //  Copyright (c) 2014 conopsys. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @interface COSMasterViewController : UITableViewController
-
 @end

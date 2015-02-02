@@ -6,10 +6,8 @@
 //  Copyright (c) 2014 conopsys. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @interface COSAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic) UIWindow* window;
 
 @end
