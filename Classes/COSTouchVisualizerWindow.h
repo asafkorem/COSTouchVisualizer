@@ -5,6 +5,7 @@
 //  Created by Joe Blau on 3/22/14.
 //  Copyright (c) 2014 conopsys. All rights reserved.
 //
+#include <UIKit/UIKit.h>
 
 @protocol COSTouchVisualizerWindowDelegate;
 
