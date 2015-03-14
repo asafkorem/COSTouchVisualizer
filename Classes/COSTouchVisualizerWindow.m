@@ -8,6 +8,31 @@
 
 #import "COSTouchVisualizerWindow.h"
 
+#pragma mark - Touch Visualizer Window
+
+@interface TouchVisualizerWindow : UIWindow
+@end
+
+@implementation TouchVisualizerWindow
+
+// UIKit tries to get the rootViewController from the overlay window.
+// Instead, try to find the rootViewController on some other
+// application window.
+// Fixes problems with status bar hiding, because it considers the
+// overlay window a candidate for controlling the status bar.
+- (UIViewController *)rootViewController {
+    for (UIWindow *window in [[UIApplication sharedApplication] windows]) {
+        if (self == window)
+            continue;
+        UIViewController *realRootViewController = window.rootViewController;
+        if (realRootViewController != nil)
+            return realRootViewController;
+    }
+    return [super rootViewController];
+}
+
+@end
+
 #pragma mark - Conopsys Touch Spot View
 
 @interface COSTouchSpotView : UIImageView
@@ -21,40 +46,28 @@
 @implementation COSTouchSpotView
 @end
 
-#pragma mark - Conopsys Touch Overlay Window View Controller
-
-@interface COSTouchOverlayWindowViewController : UIViewController
-@end
-
-@implementation COSTouchOverlayWindowViewController
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return [UIApplication sharedApplication].keyWindow.rootViewController.preferredStatusBarStyle;
-}
-
-@end
-
 #pragma mark - Conopsys Touch Visualizer Window
 
 @interface COSTouchVisualizerWindow ()
 
-@property (nonatomic) UIWindow* overlayWindow;
-@property (nonatomic) UIViewController* overlayWindowViewController;
+@property (nonatomic) UIWindow *overlayWindow;
+@property (nonatomic) UIViewController *overlayWindowViewController;
 @property (nonatomic) BOOL fingerTipRemovalScheduled;
-@property (nonatomic) NSTimer* timer;
+@property (nonatomic) NSTimer *timer;
+@property (nonatomic) NSSet *allTouches;
 
 - (void)COSTouchVisualizerWindow_commonInit;
 - (void)scheduleFingerTipRemoval;
 - (void)cancelScheduledFingerTipRemoval;
 - (void)removeInactiveFingerTips;
 - (void)removeFingerTipWithHash:(NSUInteger)hash animated:(BOOL)animated;
-- (BOOL)shouldAutomaticallyRemoveFingerTipForTouch:(UITouch*)touch;
+- (BOOL)shouldAutomaticallyRemoveFingerTipForTouch:(UITouch *)touch;
 
 @end
 
 @implementation COSTouchVisualizerWindow
 
-- (id)initWithCoder:(NSCoder*)decoder {
+- (id)initWithCoder:(NSCoder *)decoder {
     // This covers NIB-loaded windows.
     if (self = [super initWithCoder:decoder])
         [self COSTouchVisualizerWindow_commonInit];
@@ -80,15 +93,15 @@
     self.stationaryMorphEnabled = YES;
 }
 
-#pragma mark -
+#pragma mark - Touch / Ripple and Images
 
-- (UIImage*)touchImage {
+- (UIImage *)touchImage {
     if (!_touchImage) {
-        UIBezierPath* clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 50.0, 50.0)];
+        UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 50.0, 50.0)];
 
         UIGraphicsBeginImageContextWithOptions(clipPath.bounds.size, NO, 0);
 
-        UIBezierPath* drawPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(25.0, 25.0)
+        UIBezierPath *drawPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(25.0, 25.0)
                                                                 radius:22.0
                                                             startAngle:0
                                                               endAngle:2 * M_PI
@@ -110,13 +123,13 @@
     return _touchImage;
 }
 
-- (UIImage*)rippleImage {
+- (UIImage *)rippleImage {
     if (!_rippleImage) {
-        UIBezierPath* clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 50.0, 50.0)];
+        UIBezierPath *clipPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 50.0, 50.0)];
 
         UIGraphicsBeginImageContextWithOptions(clipPath.bounds.size, NO, 0);
 
-        UIBezierPath* drawPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(25.0, 25.0)
+        UIBezierPath *drawPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(25.0, 25.0)
                                                                 radius:22.0
                                                             startAngle:0
                                                               endAngle:2 * M_PI
@@ -138,13 +151,13 @@
     return _rippleImage;
 }
 
-#pragma mark Active
+#pragma mark - Active
 
 - (BOOL)anyScreenIsMirrored {
     if (![UIScreen instancesRespondToSelector:@selector(mirroredScreen)])
         return NO;
 
-    for (UIScreen* screen in [UIScreen screens]) {
+    for (UIScreen *screen in [UIScreen screens]) {
         if ([screen mirroredScreen] != nil) {
             return YES;
         }
@@ -165,17 +178,17 @@
     }
 }
 
-#pragma mark UIWindow overrides
+#pragma mark - UIWindow overrides
 
-- (void)sendEvent:(UIEvent*)event {
+- (void)sendEvent:(UIEvent *)event {
     if (self.active) {
-        NSSet* allTouches = [event allTouches];
-        for (UITouch* touch in [allTouches allObjects]) {
+        self.allTouches = [event allTouches];
+        for (UITouch *touch in [self.allTouches allObjects]) {
             switch (touch.phase) {
                 case UITouchPhaseBegan:
                 case UITouchPhaseMoved: {
                     // Generate ripples
-                    COSTouchSpotView* rippleView = [[COSTouchSpotView alloc] initWithImage:self.rippleImage];
+                    COSTouchSpotView *rippleView = [[COSTouchSpotView alloc] initWithImage:self.rippleImage];
                     [self.overlayWindow addSubview:rippleView];
 
                     rippleView.alpha = self.rippleAlpha;
@@ -186,19 +199,16 @@
                         options:UIViewAnimationOptionCurveEaseIn // See other
                         // options
                         animations:^{
-                      [rippleView setAlpha:0.0];
-                      [rippleView setFrame:CGRectInset(rippleView.frame, 25, 25)];
-                        }
-                        completion:^(BOOL finished) {
-                      [rippleView removeFromSuperview];
+                            [rippleView setAlpha:0.0];
+                            [rippleView setFrame:CGRectInset(rippleView.frame, 25, 25)];
+                        } completion:^(BOOL finished) {
+                            [rippleView removeFromSuperview];
                         }];
                 }
                 case UITouchPhaseStationary: {
-                    COSTouchSpotView* touchView = (COSTouchSpotView*)
-                        [self.overlayWindow viewWithTag:touch.hash];
+                    COSTouchSpotView *touchView = (COSTouchSpotView *)[self.overlayWindow viewWithTag:touch.hash];
 
-                    if (touch.phase != UITouchPhaseStationary && touchView != nil &&
-                        [touchView isFadingOut]) {
+                    if (touch.phase != UITouchPhaseStationary && touchView != nil && [touchView isFadingOut]) {
                         [self.timer invalidate];
                         [touchView removeFromSuperview];
                         touchView = nil;
@@ -235,32 +245,24 @@
     }
 
     [super sendEvent:event];
-
-    [self scheduleFingerTipRemoval]; // We may not see all
-    // UITouchPhaseEnded/UITouchPhaseCancelled
-    // events.
+    [self scheduleFingerTipRemoval];    // We may not see all UITouchPhaseEnded/UITouchPhaseCancelled events.
 }
 
-#pragma mark -
-#pragma mark Private
+#pragma mark - Private
 
-- (UIWindow*)overlayWindow {
+- (UIWindow *)overlayWindow {
     if (!_overlayWindow) {
-        _overlayWindow = [[UIWindow alloc] initWithFrame:self.frame];
+        _overlayWindow = [[TouchVisualizerWindow alloc] initWithFrame:self.frame];
         _overlayWindow.userInteractionEnabled = NO;
         _overlayWindow.windowLevel = UIWindowLevelStatusBar;
         _overlayWindow.backgroundColor = [UIColor clearColor];
         _overlayWindow.hidden = NO;
-
-        _overlayWindowViewController = [[COSTouchOverlayWindowViewController alloc] init];
-        [_overlayWindow setRootViewController:_overlayWindowViewController];
-        [_overlayWindowViewController setView:_overlayWindow];
     }
-
     return _overlayWindow;
 }
 
 - (void)scheduleFingerTipRemoval {
+    
     if (self.fingerTipRemovalScheduled)
         return;
     self.fingerTipRemovalScheduled = YES;
@@ -281,22 +283,25 @@
 
     NSTimeInterval now = [[NSProcessInfo processInfo] systemUptime];
     const CGFloat REMOVAL_DELAY = 0.2;
-
-    for (COSTouchSpotView* touchView in [self.overlayWindow subviews]) {
-        if (![touchView isKindOfClass:[COSTouchSpotView class]]) continue;
+    for (COSTouchSpotView *touchView in [self.overlayWindow subviews]) {
+        if (![touchView isKindOfClass:[COSTouchSpotView class]])
+            continue;
 
         if (touchView.shouldAutomaticallyRemoveAfterTimeout && now > touchView.timestamp + REMOVAL_DELAY)
             [self removeFingerTipWithHash:touchView.tag animated:YES];
     }
 
-    if ([[self.overlayWindow subviews] count]) [self scheduleFingerTipRemoval];
+    if ([[self.overlayWindow subviews] count])
+        [self scheduleFingerTipRemoval];
 }
 
 - (void)removeFingerTipWithHash:(NSUInteger)hash animated:(BOOL)animated {
-    COSTouchSpotView* touchView = (COSTouchSpotView*)[self.overlayWindow viewWithTag:hash];
-    if (touchView == nil) return;
+    COSTouchSpotView *touchView = (COSTouchSpotView *)[self.overlayWindow viewWithTag:hash];
+    if (touchView == nil)
+        return;
 
-    if ([touchView isFadingOut]) return;
+    if ([touchView isFadingOut])
+        return;
 
     BOOL animationsWereEnabled = [UIView areAnimationsEnabled];
 
@@ -323,7 +328,7 @@
                     afterDelay:self.fadeDuration];
 }
 
-- (BOOL)shouldAutomaticallyRemoveFingerTipForTouch:(UITouch*)touch;
+- (BOOL)shouldAutomaticallyRemoveFingerTipForTouch:(UITouch *)touch;
 {
     // We don't reliably get UITouchPhaseEnded or UITouchPhaseCancelled
     // events via -sendEvent: for certain touch events. Known cases
@@ -337,18 +342,20 @@
     // don't use UITouchPhaseStationary touches for those. *sigh*). So we
     // end up with this more complicated setup.
 
-    UIView* view = [touch view];
+    UIView *view = [touch view];
     view = [view hitTest:[touch locationInView:view] withEvent:nil];
 
     while (view != nil) {
         if ([view isKindOfClass:[UITableViewCell class]]) {
-            for (UIGestureRecognizer* recognizer in [touch gestureRecognizers]) {
-                if ([recognizer isKindOfClass:[UISwipeGestureRecognizer class]]) return YES;
+            for (UIGestureRecognizer *recognizer in [touch gestureRecognizers]) {
+                if ([recognizer isKindOfClass:[UISwipeGestureRecognizer class]])
+                    return YES;
             }
         }
 
         if ([view isKindOfClass:[UITableView class]]) {
-            if ([[touch gestureRecognizers] count] == 0) return YES;
+            if ([[touch gestureRecognizers] count] == 0)
+                return YES;
         }
         view = view.superview;
     }
@@ -356,8 +363,8 @@
     return NO;
 }
 
-- (void)performMorph:(NSTimer*)theTimer {
-    UIView* view = (UIView*)[theTimer userInfo];
+- (void)performMorph:(NSTimer *)theTimer {
+    UIView *view = (UIView *)[theTimer userInfo];
     NSTimeInterval duration = .4;
     NSTimeInterval delay = 0;
     // Start
@@ -395,7 +402,9 @@
                             view.transform = CGAffineTransformMakeScale(1, 1);
                           }
                           completion:^(BOOL finished){
-
+                              // If there are no touches, remove this morping touch
+                              if (self.allTouches.count == 0)
+                                  [view removeFromSuperview];
                           }];
                     }];
               }];

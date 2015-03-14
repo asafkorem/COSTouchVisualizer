@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		530F5A797A9D4A7BB1CB3265 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B1CBA208334F3CBDDFFFE4 /* libPods.a */; };
+		E670B46A1AB3EBEF0043E508 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E670B4691AB3EBEF0043E508 /* Main.storyboard */; };
+		E670B46C1AB3EC8E0043E508 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E670B46B1AB3EC8E0043E508 /* Launch Screen.xib */; };
 		E6F67FCD18DE12B4001C954A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6F67FCC18DE12B4001C954A /* Foundation.framework */; };
 		E6F67FCF18DE12B4001C954A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6F67FCE18DE12B4001C954A /* CoreGraphics.framework */; };
 		E6F67FD118DE12B4001C954A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6F67FD018DE12B4001C954A /* UIKit.framework */; };
 		E6F67FD718DE12B4001C954A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6F67FD518DE12B4001C954A /* InfoPlist.strings */; };
 		E6F67FD918DE12B4001C954A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F67FD818DE12B4001C954A /* main.m */; };
 		E6F67FDD18DE12B4001C954A /* COSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F67FDC18DE12B4001C954A /* COSAppDelegate.m */; };
-		E6F67FE018DE12B4001C954A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6F67FDE18DE12B4001C954A /* Main.storyboard */; };
 		E6F67FE318DE12B4001C954A /* COSMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F67FE218DE12B4001C954A /* COSMasterViewController.m */; };
 		E6F67FE618DE12B4001C954A /* COSDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F67FE518DE12B4001C954A /* COSDetailViewController.m */; };
 		E6F67FE818DE12B4001C954A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6F67FE718DE12B4001C954A /* Images.xcassets */; };
@@ -38,6 +39,8 @@
 /* Begin PBXFileReference section */
 		49B1CBA208334F3CBDDFFFE4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AF719864DF9411488359337 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		E670B4691AB3EBEF0043E508 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		E670B46B1AB3EC8E0043E508 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		E6F67FC918DE12B4001C954A /* TouchVisualizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchVisualizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6F67FCC18DE12B4001C954A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E6F67FCE18DE12B4001C954A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -48,7 +51,6 @@
 		E6F67FDA18DE12B4001C954A /* TouchVisualizer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TouchVisualizer-Prefix.pch"; sourceTree = "<group>"; };
 		E6F67FDB18DE12B4001C954A /* COSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = COSAppDelegate.h; sourceTree = "<group>"; };
 		E6F67FDC18DE12B4001C954A /* COSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = COSAppDelegate.m; sourceTree = "<group>"; };
-		E6F67FDF18DE12B4001C954A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E6F67FE118DE12B4001C954A /* COSMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = COSMasterViewController.h; sourceTree = "<group>"; };
 		E6F67FE218DE12B4001C954A /* COSMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = COSMasterViewController.m; sourceTree = "<group>"; };
 		E6F67FE418DE12B4001C954A /* COSDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = COSDetailViewController.h; sourceTree = "<group>"; };
@@ -127,12 +129,13 @@
 			children = (
 				E6F67FDB18DE12B4001C954A /* COSAppDelegate.h */,
 				E6F67FDC18DE12B4001C954A /* COSAppDelegate.m */,
-				E6F67FDE18DE12B4001C954A /* Main.storyboard */,
+				E670B4691AB3EBEF0043E508 /* Main.storyboard */,
 				E6F67FE118DE12B4001C954A /* COSMasterViewController.h */,
 				E6F67FE218DE12B4001C954A /* COSMasterViewController.m */,
 				E6F67FE418DE12B4001C954A /* COSDetailViewController.h */,
 				E6F67FE518DE12B4001C954A /* COSDetailViewController.m */,
 				E6F67FE718DE12B4001C954A /* Images.xcassets */,
+				E670B46B1AB3EC8E0043E508 /* Launch Screen.xib */,
 				E6F67FD318DE12B4001C954A /* Supporting Files */,
 			);
 			path = TouchVisualizer;
@@ -247,8 +250,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6F67FE818DE12B4001C954A /* Images.xcassets in Resources */,
+				E670B46C1AB3EC8E0043E508 /* Launch Screen.xib in Resources */,
 				E6F67FD718DE12B4001C954A /* InfoPlist.strings in Resources */,
-				E6F67FE018DE12B4001C954A /* Main.storyboard in Resources */,
+				E670B46A1AB3EBEF0043E508 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,14 +336,6 @@
 				E6F67FD618DE12B4001C954A /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E6F67FDE18DE12B4001C954A /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E6F67FDF18DE12B4001C954A /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		E6F67FF718DE12B4001C954A /* InfoPlist.strings */ = {

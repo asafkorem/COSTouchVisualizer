@@ -15,18 +15,18 @@
 @property (nonatomic, weak) id<COSTouchVisualizerWindowDelegate> touchVisualizerWindowDelegate;
 
 // Touch effects
-@property (nonatomic) UIImage* touchImage;
+@property (nonatomic) UIImage *touchImage;
 @property (nonatomic) CGFloat touchAlpha;
 @property (nonatomic) NSTimeInterval fadeDuration;
-@property (nonatomic) UIColor* strokeColor;
-@property (nonatomic) UIColor* fillColor;
+@property (nonatomic) UIColor *strokeColor;
+@property (nonatomic) UIColor *fillColor;
 
 // Ripple Effects
-@property (nonatomic) UIImage* rippleImage;
+@property (nonatomic) UIImage *rippleImage;
 @property (nonatomic) CGFloat rippleAlpha;
 @property (nonatomic) NSTimeInterval rippleFadeDuration;
-@property (nonatomic) UIColor* rippleStrokeColor;
-@property (nonatomic) UIColor* rippleFillColor;
+@property (nonatomic) UIColor *rippleStrokeColor;
+@property (nonatomic) UIColor *rippleFillColor;
 
 @property (nonatomic) BOOL stationaryMorphEnabled; // default: YES
 
@@ -36,7 +36,7 @@
 
 @optional
 
-- (BOOL)touchVisualizerWindowShouldShowFingertip:(COSTouchVisualizerWindow*)window;
-- (BOOL)touchVisualizerWindowShouldAlwaysShowFingertip:(COSTouchVisualizerWindow*)window;
+- (BOOL)touchVisualizerWindowShouldShowFingertip:(COSTouchVisualizerWindow *)window;
+- (BOOL)touchVisualizerWindowShouldAlwaysShowFingertip:(COSTouchVisualizerWindow *)window;
 
 @end
