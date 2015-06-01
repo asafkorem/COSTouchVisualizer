@@ -23,6 +23,7 @@
     static COSTouchVisualizerWindow *customWindow = nil;
     if (!customWindow) {
         customWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        
         [customWindow setFillColor:[UIColor purpleColor]];
         [customWindow setStrokeColor:[UIColor blueColor]];
         [customWindow setTouchAlpha:0.4];
@@ -30,10 +31,13 @@
         [customWindow setRippleFillColor:[UIColor purpleColor]];
         [customWindow setRippleStrokeColor:[UIColor blueColor]];
         [customWindow setRippleAlpha:0.1];
+        
         [customWindow setTouchVisualizerWindowDelegate:self];
     }
     return customWindow;
 }
+
+#pragma mark - COSTouchVisualizerWindowDelegate
 
 - (BOOL)touchVisualizerWindowShouldAlwaysShowFingertip:(COSTouchVisualizerWindow *)window {
     return YES;
