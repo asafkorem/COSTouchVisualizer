@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="touch, visualizer, finger, tips">
+    <meta name="description" content="Enhance your presentations, demos, and collaboration.">
+    <link rel="shortcut icon" type="image/png" href="favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    <link rel="stylesheet" id="ppstyle" type="text/css" href="style.css">
+    <link rel='stylesheet' href='./css/font-awesome.min.css'/><link rel='stylesheet' href='./css/ionicons.min.css'/>
+    <script src="./js/jquery-2.1.0.min.js"></script>
+    <script src="./js/bootstrap.js"></script>
+    <script src="./js/blocs.js"></script>
+
+    <title>TouchVisualizer - Touch Visualizer</title>
+</head>
+<body>
+<!-- Main container -->
+<div class="page-container">
+<!-- Hero Bloc --><div id="hero-bloc" class="bloc hero bgc-2 bg-HeroImage d-bloc">
+	<div class="container bloc-sm hero-nav">
+		<nav class="navbar row">
+			<div class="navbar-header">
+				<a class="navbar-brand ltc-2" href="index.html">Conopsys</a>
+				<button id="nav-toggle" type="button" class="ui-navbar-toggle navbar-toggle" data-toggle="collapse" data-target=".navbar-1">
+					<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse navbar-1">
+				<ul class="site-navigation nav pull-right">
+					<li>
+						<a href="index.html">Home</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div class="v-center text-center">
+		<div class="vc-content">
+			<br /><br /><br /><a id="scroll-hero" class="btn-dwn" href="#"><span class="fa fa-chevron-down"></span></a>
+		</div>
+	</div>
+</div><!-- Hero Bloc END --><!-- bloc-2 --><div class="bloc  l-bloc" id="bloc-2">
+	<div class="container bloc-md">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="embed-responsive embed-responsive-16by9">
+					<iframe class="embed-responsive-item" src="https://player.vimeo.com/video/129385054" frameborder="0">
+					</iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!-- bloc-2 END --><!-- bloc-3 --><div class="bloc  d-bloc" id="bloc-3">
+	<div class="container bloc-md">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="text-center">
+					<span class="ion ion-easel icon-round icon-md"></span>
+				</div>
+				<h3 class="text-center mg-md">
+					Presentations
+				</h3>
+				<p class="text-center">
+					Show your audience exactly what interactions you&rsquo;re performing in real-time as you present.
+				</p>
+			</div>
+			<div class="col-sm-4">
+				<div class="text-center">
+					<span class="fa fa-apple icon-round icon-md"></span>
+				</div>
+				<h3 class="text-center mg-md">
+					App Store Demos
+				</h3>
+				<p class="text-center">
+					Create an app store demo video where users can see your advanced gesture based interface.
+				</p>
+			</div>
+			<div class="col-sm-4">
+				<div class="text-center">
+					<span class="ion ion-ios-people icon-round icon-md"></span>
+				</div>
+				<h3 class="text-center mg-md">
+					Team Collaboration
+				</h3>
+				<p class="text-center">
+					Show your remote client videos of interactions that you&rsquo;ve been working on.
+				</p>
+			</div>
+		</div>
+	</div>
+</div><!-- bloc-3 END --><!-- bloc-4 --><div class="bloc " id="bloc-4">
+	<div class="container bloc-md">
+		<div class="row">
+			<div class="col-sm-12">
+				<h2 class="mg-md text-center">
+					Installing via CocoaPods
+				</h2>
+				<p>
+					COSTouchVisualizer is available through CocoaPods, to install it simply add the following line to your Podfile:
+				</p>
+        <script src="https://gist.github.com/joeblau/f21aafdb89bc73defb0f.js"></script>
+			</div>
+		</div>
+		<div class="row voffset">
+			<div class="col-sm-6">
+				<h3 class="mg-md">
+					Objective-C
+				</h3>
+        <script src="https://gist.github.com/joeblau/82e0cd9d6ae06e6db962.js"></script>
+        <script src="https://gist.github.com/joeblau/7010cae66c6a4cbdd021.js"></script>
+			</div>
+			<div class="col-sm-6">
+				<h3 class="mg-md">
+					Swift
+				</h3>
+        <script src="https://gist.github.com/joeblau/47a167a188477d94cb0a.js"></script>
+			</div>
+		</div>
+	</div>
+</div><!-- bloc-4 END --><!-- bloc-5 --><div class="bloc bg-field  l-bloc" id="bloc-5">
+	<div class="container bloc-md">
+		<div class="row">
+			<div class="col-sm-12">
+				<h2 class="mg-md text-center ">
+					Delegates
+				</h2>
+				<p>
+					To make the window change active status dynamically or to enable debugging mode, implement the <code>COSTouchVisualizerWindowDelegate.</code><br /><br />The first delegate method (<code>-touchVisualizerWindowShouldShowFingertip:</code>) tells the window to enable fingertip or not. You should return <code>YES</code>/<code>true</code> to enable the fingertip feature, or <code>NO</code>/<code>false</code> if you want to close this feature.<br /><br />The second method (<code>-touchVisualizerWindowShouldAlwaysShowFingertip:</code>) tells the window to always show the fingertip even if there's no any mirrored screens (when returning <code>YES</code>/<code>true</code>). If this method returns <code>NO</code>/<code>false</code>, the window only show fingertip when connected to a mirrored screen.
+				</p>
+			</div>
+		</div>
+		<div class="row voffset">
+			<div class="col-sm-6">
+				<h3 class="mg-md ">
+					Objective-C
+				</h3>
+        <script src="https://gist.github.com/joeblau/78fcd24b3b9937d9d66f.js"></script>
+			</div>
+			<div class="col-sm-6">
+				<h3 class="mg-md ">
+					Swift
+				</h3>
+        <script src="https://gist.github.com/joeblau/8b4a84f8ba0f454f27e5.js"></script>
+			</div>
+		</div>
+	</div>
+</div><!-- bloc-5 END --><!-- bloc-6 --><div class="bloc " id="bloc-6">
+	<div class="container bloc-md">
+		<div class="row">
+			<div class="col-sm-12">
+				<h2 class="mg-md text-center">
+					Customization
+				</h2>
+				<p class="">
+					You have the ability to custom the colors of the touch point and the ripple effect with three options: Fill Color, Stroke Color and Alpha.<br />
+				</p>
+			</div>
+		</div>
+		<div class="row voffset">
+			<div class="col-sm-6">
+				<h3 class="mg-md">
+					Objective C
+				</h3>
+        <script src="https://gist.github.com/joeblau/92198c523920b63cee3c.js"></script>
+			</div>
+			<div class="col-sm-6">
+				<h3 class="mg-md">
+					Swift
+				</h3>
+        <script src="https://gist.github.com/joeblau/91553aaf66a09e39d331.js"></script>
+			</div>
+		</div>
+	</div>
+</div><!-- bloc-6 END --><!-- Footer - bloc-7 --><div class="bloc  d-bloc" id="bloc-7">
+	<div class="container bloc-lg">
+		<div class="row">
+			<div class="col-sm-4">
+				<iframe width="100%" height="30" frameborder="0" style="border:0" src="https://ghbtns.com/github-btn.html?user=conopsys&amp;repo=costouchvisualizer&amp;type=star&amp;count=true&amp;size=large">
+				</iframe>
+			</div>
+			<div class="col-sm-4">
+				<iframe width="100%" height="30" frameborder="0" style="border:0" src="https://ghbtns.com/github-btn.html?user=conopsys&amp;repo=costouchvisualizer&amp;type=follow&amp;count=true&amp;size=large">
+				</iframe>
+			</div>
+			<div class="col-sm-4">
+				<iframe width="100%" height="30" frameborder="0" style="border:0" src="https://ghbtns.com/github-btn.html?user=conopsys&amp;repo=costouchvisualizer&amp;type=fork&amp;count=true&amp;size=large">
+				</iframe>
+			</div>
+		</div>
+	</div>
+</div><!-- Footer - bloc-7 END -->
+</div>
+<!-- Main container END -->
+
+</body>
+
+<!-- Google Analytics -->
+
+<!-- Google Analytics END -->
+
+</html>
