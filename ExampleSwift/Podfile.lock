@@ -6,9 +6,11 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   COSTouchVisualizer:
-    :path: ../COSTouchVisualizer.podspec
+    :path: "../COSTouchVisualizer.podspec"
 
 SPEC CHECKSUMS:
-  COSTouchVisualizer: a398089327a6c02897823614d7447ccc97198997
+  COSTouchVisualizer: 248b8645474a13d7698dd0223dc593051bf715c9
 
-COCOAPODS: 0.36.3
+PODFILE CHECKSUM: 562a1d56fdbb1c3ffe7f33d733b00986362d22c3
+
+COCOAPODS: 1.1.1

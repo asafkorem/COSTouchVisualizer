@@ -1,3 +1,6 @@
-use_frameworks!
 
-pod "COSTouchVisualizer", :path => "../COSTouchVisualizer.podspec"
+target 'TouchVisualizer' do
+  use_frameworks!
+  pod "COSTouchVisualizer", :path => "../COSTouchVisualizer.podspec"
+
+end
