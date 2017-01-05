@@ -10,7 +10,6 @@
 		A71946C41C7EFB1F003B7C4A /* COSTouchVisualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = A71946BD1C7EFB1F003B7C4A /* COSTouchVisualizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A71946C51C7EFB1F003B7C4A /* COSTouchVisualizerWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = A71946C11C7EFB1F003B7C4A /* COSTouchVisualizerWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A71946C61C7EFB1F003B7C4A /* COSTouchVisualizerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = A71946C21C7EFB1F003B7C4A /* COSTouchVisualizerWindow.m */; };
-		A71946C71C7EFB1F003B7C4A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A71946C31C7EFB1F003B7C4A /* Info.plist */; };
 		A71946C81C7EFB69003B7C4A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6F67FD018DE12B4001C954A /* UIKit.framework */; };
 		A71946C91C7EFB74003B7C4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6F67FCC18DE12B4001C954A /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -146,7 +145,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A71946C71C7EFB1F003B7C4A /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
