@@ -1,1 +1,4 @@
-pod "COSTouchVisualizer", :path => "../COSTouchVisualizer.podspec"
+target 'TouchVisualizer' do
+  pod "COSTouchVisualizer", :path => "../COSTouchVisualizer.podspec"
+
+end
