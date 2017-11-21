@@ -219,6 +219,10 @@
                         [self.overlayWindow addSubview:touchView];
 
                         if (self.stationaryMorphEnabled) {
+                            if (self.timer) {
+                                [self.timer invalidate];
+                            }
+
                             self.timer = [NSTimer scheduledTimerWithTimeInterval:0.6
                                                                           target:self
                                                                         selector:@selector(performMorph:)
