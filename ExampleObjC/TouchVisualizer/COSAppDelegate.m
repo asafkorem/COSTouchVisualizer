@@ -8,9 +8,7 @@
 
 #import "COSAppDelegate.h"
 #import <COSTouchVisualizerWindow.h>
-
-@interface COSAppDelegate () <COSTouchVisualizerWindowDelegate>
-@end
+#import <COSTouchConfig.h>
 
 @implementation COSAppDelegate
 
@@ -22,25 +20,29 @@
 - (COSTouchVisualizerWindow *)window {
     static COSTouchVisualizerWindow *customWindow = nil;
     if (!customWindow) {
-        customWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        COSTouchConfig *contactConfig = ({
+            COSTouchConfig *config = [[COSTouchConfig alloc] initWithTouchConfigType:COSTouchConfigTpyeContact];
+            config.fillColor = [UIColor purpleColor];
+            config.strokeColor = [UIColor blueColor];
+            config.alpha = 0.4;
+            config;
+        });
         
-        [customWindow setFillColor:[UIColor purpleColor]];
-        [customWindow setStrokeColor:[UIColor blueColor]];
-        [customWindow setTouchAlpha:0.4];
-
-        [customWindow setRippleFillColor:[UIColor purpleColor]];
-        [customWindow setRippleStrokeColor:[UIColor blueColor]];
-        [customWindow setRippleAlpha:0.1];
+        COSTouchConfig *riippleConfig = ({
+            COSTouchConfig *config = [[COSTouchConfig alloc] initWithTouchConfigType:COSTouchConfigTpyeRipple];
+            config.fillColor = [UIColor purpleColor];
+            config.strokeColor = [UIColor blueColor];
+            config.alpha = 0.1;
+            config;
+        });
         
-        [customWindow setTouchVisualizerWindowDelegate:self];
+        customWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[UIScreen mainScreen].bounds
+                                                          morphEnabled:YES
+                                                       touchVisibility:COSTouchVisualizerWindowTouchVisibilityRemoteAndLocal
+                                                         contactConfig:contactConfig
+                                                          rippleConfig:riippleConfig];
     }
     return customWindow;
-}
-
-#pragma mark - COSTouchVisualizerWindowDelegate
-
-- (BOOL)touchVisualizerWindowShouldAlwaysShowFingertip:(COSTouchVisualizerWindow *)window {
-    return YES;
 }
 
 @end

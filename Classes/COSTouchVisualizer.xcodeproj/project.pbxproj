@@ -12,6 +12,14 @@
 		A71946C61C7EFB1F003B7C4A /* COSTouchVisualizerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = A71946C21C7EFB1F003B7C4A /* COSTouchVisualizerWindow.m */; };
 		A71946C81C7EFB69003B7C4A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6F67FD018DE12B4001C954A /* UIKit.framework */; };
 		A71946C91C7EFB74003B7C4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6F67FCC18DE12B4001C954A /* Foundation.framework */; };
+		E6C633A91FD0FB9D000DA40C /* COSOverlayVisualizerWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = E6C633A71FD0FB9D000DA40C /* COSOverlayVisualizerWindow.h */; };
+		E6C633AA1FD0FB9D000DA40C /* COSOverlayVisualizerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C633A81FD0FB9D000DA40C /* COSOverlayVisualizerWindow.m */; };
+		E6C633AD1FD0FC8E000DA40C /* COSTouchImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = E6C633AB1FD0FC8E000DA40C /* COSTouchImageView.h */; };
+		E6C633AE1FD0FC8E000DA40C /* COSTouchImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C633AC1FD0FC8E000DA40C /* COSTouchImageView.m */; };
+		E6C633B11FD2CCB2000DA40C /* COSTouchConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = E6C633AF1FD2CCB2000DA40C /* COSTouchConfig.h */; };
+		E6C633B21FD2CCB2000DA40C /* COSTouchConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C633B01FD2CCB2000DA40C /* COSTouchConfig.m */; };
+		E6C633B51FD2D4FD000DA40C /* COSTouchImageFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = E6C633B31FD2D4FD000DA40C /* COSTouchImageFactory.h */; };
+		E6C633B61FD2D4FD000DA40C /* COSTouchImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C633B41FD2D4FD000DA40C /* COSTouchImageFactory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +28,14 @@
 		A71946C11C7EFB1F003B7C4A /* COSTouchVisualizerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = COSTouchVisualizerWindow.h; sourceTree = "<group>"; };
 		A71946C21C7EFB1F003B7C4A /* COSTouchVisualizerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = COSTouchVisualizerWindow.m; sourceTree = "<group>"; };
 		A71946C31C7EFB1F003B7C4A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E6C633A71FD0FB9D000DA40C /* COSOverlayVisualizerWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = COSOverlayVisualizerWindow.h; sourceTree = "<group>"; };
+		E6C633A81FD0FB9D000DA40C /* COSOverlayVisualizerWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = COSOverlayVisualizerWindow.m; sourceTree = "<group>"; };
+		E6C633AB1FD0FC8E000DA40C /* COSTouchImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = COSTouchImageView.h; sourceTree = "<group>"; };
+		E6C633AC1FD0FC8E000DA40C /* COSTouchImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = COSTouchImageView.m; sourceTree = "<group>"; };
+		E6C633AF1FD2CCB2000DA40C /* COSTouchConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = COSTouchConfig.h; sourceTree = "<group>"; };
+		E6C633B01FD2CCB2000DA40C /* COSTouchConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = COSTouchConfig.m; sourceTree = "<group>"; };
+		E6C633B31FD2D4FD000DA40C /* COSTouchImageFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = COSTouchImageFactory.h; sourceTree = "<group>"; };
+		E6C633B41FD2D4FD000DA40C /* COSTouchImageFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = COSTouchImageFactory.m; sourceTree = "<group>"; };
 		E6F67FCC18DE12B4001C954A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E6F67FD018DE12B4001C954A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -44,6 +60,14 @@
 				A71946C11C7EFB1F003B7C4A /* COSTouchVisualizerWindow.h */,
 				A71946C21C7EFB1F003B7C4A /* COSTouchVisualizerWindow.m */,
 				A71946C31C7EFB1F003B7C4A /* Info.plist */,
+				E6C633A71FD0FB9D000DA40C /* COSOverlayVisualizerWindow.h */,
+				E6C633A81FD0FB9D000DA40C /* COSOverlayVisualizerWindow.m */,
+				E6C633AB1FD0FC8E000DA40C /* COSTouchImageView.h */,
+				E6C633AC1FD0FC8E000DA40C /* COSTouchImageView.m */,
+				E6C633AF1FD2CCB2000DA40C /* COSTouchConfig.h */,
+				E6C633B01FD2CCB2000DA40C /* COSTouchConfig.m */,
+				E6C633B31FD2D4FD000DA40C /* COSTouchImageFactory.h */,
+				E6C633B41FD2D4FD000DA40C /* COSTouchImageFactory.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -81,7 +105,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6C633A91FD0FB9D000DA40C /* COSOverlayVisualizerWindow.h in Headers */,
+				E6C633B51FD2D4FD000DA40C /* COSTouchImageFactory.h in Headers */,
+				E6C633AD1FD0FC8E000DA40C /* COSTouchImageView.h in Headers */,
 				A71946C51C7EFB1F003B7C4A /* COSTouchVisualizerWindow.h in Headers */,
+				E6C633B11FD2CCB2000DA40C /* COSTouchConfig.h in Headers */,
 				A71946C41C7EFB1F003B7C4A /* COSTouchVisualizer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,6 +183,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6C633AA1FD0FB9D000DA40C /* COSOverlayVisualizerWindow.m in Sources */,
+				E6C633B61FD2D4FD000DA40C /* COSTouchImageFactory.m in Sources */,
+				E6C633B21FD2CCB2000DA40C /* COSTouchConfig.m in Sources */,
+				E6C633AE1FD0FC8E000DA40C /* COSTouchImageView.m in Sources */,
 				A71946C61C7EFB1F003B7C4A /* COSTouchVisualizerWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

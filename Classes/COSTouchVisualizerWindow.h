@@ -7,36 +7,32 @@
 //
 #include <UIKit/UIKit.h>
 
-@protocol COSTouchVisualizerWindowDelegate;
+typedef NS_ENUM(NSUInteger, COSTouchVisualizerWindowTouchVisibility) {
+    COSTouchVisualizerWindowTouchVisibilityNever,
+    COSTouchVisualizerWindowTouchVisibilityRemoteOnly,
+    COSTouchVisualizerWindowTouchVisibilityRemoteAndLocal,
+};
+
+@class COSTouchVisualizerWindow;
+@class COSTouchConfig;
 
 @interface COSTouchVisualizerWindow : UIWindow
 
-@property (nonatomic, readonly, getter=isActive) BOOL active;
-@property (nonatomic, weak) id<COSTouchVisualizerWindowDelegate> touchVisualizerWindowDelegate;
+@property (nonatomic, readonly, getter=isMorphEnabled) BOOL morphEnabled;
+@property (nonatomic, readonly, nonnull) COSTouchConfig *touchContactConfig;
+@property (nonatomic, readonly, nonnull) COSTouchConfig *touchRippleConfig;
+@property (nonatomic, readonly) COSTouchVisualizerWindowTouchVisibility touchVisibility;
 
-// Touch effects
-@property (nonatomic) UIImage *touchImage;
-@property (nonatomic) CGFloat touchAlpha;
-@property (nonatomic) NSTimeInterval fadeDuration;
-@property (nonatomic) UIColor *strokeColor;
-@property (nonatomic) UIColor *fillColor;
+-(nonnull instancetype)initWithFrame:(CGRect)frame
+                        morphEnabled:(BOOL)morphEnabled
+                          touchVisibility:(COSTouchVisualizerWindowTouchVisibility)touchVisibility
+                       contactConfig:(nullable COSTouchConfig*)contactConfig
+                        rippleConfig:(nullable COSTouchConfig*)rippleConfig NS_DESIGNATED_INITIALIZER;
+-(nonnull instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+-(nonnull instancetype)init NS_UNAVAILABLE;
+-(nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
-// Ripple Effects
-@property (nonatomic) UIImage *rippleImage;
-@property (nonatomic) CGFloat rippleAlpha;
-@property (nonatomic) NSTimeInterval rippleFadeDuration;
-@property (nonatomic) UIColor *rippleStrokeColor;
-@property (nonatomic) UIColor *rippleFillColor;
-
-@property (nonatomic) BOOL stationaryMorphEnabled; // default: YES
 
 @end
 
-@protocol COSTouchVisualizerWindowDelegate <NSObject>
 
-@optional
-
-- (BOOL)touchVisualizerWindowShouldShowFingertip:(COSTouchVisualizerWindow *)window;
-- (BOOL)touchVisualizerWindowShouldAlwaysShowFingertip:(COSTouchVisualizerWindow *)window;
-
-@end
