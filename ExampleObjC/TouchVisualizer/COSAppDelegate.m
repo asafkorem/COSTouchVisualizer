@@ -22,16 +22,16 @@
     if (!customWindow) {
         COSTouchConfig *contactConfig = ({
             COSTouchConfig *config = [[COSTouchConfig alloc] initWithTouchConfigType:COSTouchConfigTpyeContact];
-            config.fillColor = [UIColor purpleColor];
-            config.strokeColor = [UIColor blueColor];
+            config.fillColor = UIColor.purpleColor;
+            config.strokeColor = UIColor.blueColor;
             config.alpha = 0.4;
             config;
         });
         
         COSTouchConfig *riippleConfig = ({
             COSTouchConfig *config = [[COSTouchConfig alloc] initWithTouchConfigType:COSTouchConfigTpyeRipple];
-            config.fillColor = [UIColor purpleColor];
-            config.strokeColor = [UIColor blueColor];
+            config.fillColor = UIColor.purpleColor;
+            config.strokeColor = UIColor.blueColor;
             config.alpha = 0.1;
             config;
         });

@@ -10,7 +10,7 @@
 
 @interface COSDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *holding;
-- (void)configureView;
+- (void)_configureView;
 @end
 
 @implementation COSDetailViewController
@@ -20,7 +20,7 @@
 - (void)setDetailItem:(id)newDetailItem {
     if (_detailItem != newDetailItem) {
         _detailItem = newDetailItem;
-        [self configureView]; // Update the view
+        [self _configureView]; // Update the view
     }
 }
 
@@ -38,15 +38,17 @@
     self.holding.textColor = [UIColor lightGrayColor];
 }
 
-- (void)configureView {
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self _configureView];
+}
+
+#pragma mark - Private
+
+- (void)_configureView {
     // Update the user interface for the detail item.
     if (self.detailItem)
         self.detailDescriptionLabel.text = [self.detailItem description];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self configureView];
 }
 
 @end
