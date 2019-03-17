@@ -12,7 +12,11 @@
 #import "COSTouchConfig.h"
 #import "COSTouchImageFactory.h"
 
-static const NSTimeInterval COSTouchVisualizerWindowRemoveDelay = 0.2;
+static const NSTimeInterval TOUCH_VISUALIZER_WINDOW_REMOVE_DELAY = 0.2;
+static const NSTimeInterval TOUCH_VISUALIZER_PULSING_TIMER_DELAY = 0.6;
+static const NSTimeInterval TOUCH_VISUALIZER_MORPH_DURATION = 0.4;
+static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
+
 
 @interface COSTouchVisualizerWindow ()
 
@@ -129,7 +133,7 @@ static const NSTimeInterval COSTouchVisualizerWindowRemoveDelay = 0.2;
                                     [self.timer invalidate];
                                 }
                                 
-                                self.timer = [NSTimer scheduledTimerWithTimeInterval:0.6
+                                self.timer = [NSTimer scheduledTimerWithTimeInterval:TOUCH_VISUALIZER_PULSING_TIMER_DELAY
                                                                               target:self
                                                                             selector:@selector(performMorphWithTouchView:)
                                                                             userInfo:touchView
@@ -147,7 +151,7 @@ static const NSTimeInterval COSTouchVisualizerWindowRemoveDelay = 0.2;
                     }
                     case UITouchPhaseEnded:
                     case UITouchPhaseCancelled: {
-                        [self removeFingerTipWithHash:touch.hash animated:YES];
+                        [self _removeFingerTipWithHash:touch.hash animated:YES];
                         break;
                     }
                 }
@@ -201,8 +205,8 @@ static const NSTimeInterval COSTouchVisualizerWindowRemoveDelay = 0.2;
             continue;
         }
 
-        if (touchView.shouldAutomaticallyRemoveAfterTimeout && now > touchView.timestamp + COSTouchVisualizerWindowRemoveDelay) {
-            [self removeFingerTipWithHash:touchView.tag animated:YES];
+        if (touchView.shouldAutomaticallyRemoveAfterTimeout && now > touchView.timestamp + TOUCH_VISUALIZER_WINDOW_REMOVE_DELAY) {
+            [self _removeFingerTipWithHash:touchView.tag animated:YES];
         }
     }
 
@@ -211,7 +215,7 @@ static const NSTimeInterval COSTouchVisualizerWindowRemoveDelay = 0.2;
     }
 }
 
-- (void)removeFingerTipWithHash:(NSUInteger)hash animated:(BOOL)animated {
+- (void)_removeFingerTipWithHash:(NSUInteger)hash animated:(BOOL)animated {
     COSTouchImageView *touchView = (COSTouchImageView *)[self.overlayWindow viewWithTag:hash];
     if (touchView == nil || [touchView isFadingOut]) {
         return;
@@ -277,38 +281,38 @@ static const NSTimeInterval COSTouchVisualizerWindowRemoveDelay = 0.2;
     return NO;
 }
 
-- (void)performMorphWithTouchView:(COSTouchImageView *)touchView {
-    NSTimeInterval duration = .4;
-    NSTimeInterval delay = 0;
+- (void)performMorphWithTouchView:(NSTimer *)timer {
+    UIView *touchView = timer.userInfo;
+
     // Start
     touchView.alpha = self.touchContactConfig.alpha;
     touchView.transform = CGAffineTransformMakeScale(1, 1);
-    [UIView animateWithDuration:duration / 4
-        delay:delay
+    [UIView animateWithDuration:TOUCH_VISUALIZER_MORPH_DURATION / 4
+        delay:TOUCH_VISUALIZER_ZERO_DELAY
         options:0
         animations:^{
           // End
           touchView.transform = CGAffineTransformMakeScale(1, 1.2);
         }
         completion:^(BOOL finished) {
-          [UIView animateWithDuration:duration / 4
-              delay:0
+          [UIView animateWithDuration:TOUCH_VISUALIZER_MORPH_DURATION / 4
+              delay:TOUCH_VISUALIZER_ZERO_DELAY
               options:0
               animations:^{
                 // End
                 touchView.transform = CGAffineTransformMakeScale(1.2, 0.9);
               }
               completion:^(BOOL finished) {
-                [UIView animateWithDuration:duration / 4
-                    delay:0
+                [UIView animateWithDuration:TOUCH_VISUALIZER_MORPH_DURATION / 4
+                    delay:TOUCH_VISUALIZER_ZERO_DELAY
                     options:0
                     animations:^{
                       // End
                       touchView.transform = CGAffineTransformMakeScale(0.9, 0.9);
                     }
                     completion:^(BOOL finished) {
-                      [UIView animateWithDuration:duration / 4
-                          delay:0
+                      [UIView animateWithDuration:TOUCH_VISUALIZER_MORPH_DURATION / 4
+                          delay:TOUCH_VISUALIZER_ZERO_DELAY
                           options:0
                           animations:^{
                             // End
