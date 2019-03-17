@@ -1,3 +1,4 @@
+platform :ios, '7.1'
 
 target 'TouchVisualizer' do
   use_frameworks!
