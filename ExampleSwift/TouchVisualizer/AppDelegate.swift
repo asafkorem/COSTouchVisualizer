@@ -10,42 +10,28 @@ import UIKit
 import COSTouchVisualizer
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, COSTouchVisualizerWindowDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     internal var window: UIWindow? = {
-        let customWindow = COSTouchVisualizerWindow(frame: UIScreen.main.bounds)
+        let contactConfig = COSTouchConfig(touchConfigType: .contact)
+        contactConfig.fillColor = UIColor.purple
+        contactConfig.strokeColor = UIColor.blue
+        contactConfig.alpha = 0.4;
         
-        customWindow.fillColor = UIColor.purple
-        customWindow.strokeColor = UIColor.blue
-        customWindow.touchAlpha = 0.4;
         
-        customWindow.rippleFillColor = UIColor.purple
-        customWindow.rippleStrokeColor = UIColor.blue
-        customWindow.touchAlpha = 0.1;
+        let rippleConfig = COSTouchConfig(touchConfigType: .ripple)
+        rippleConfig.fillColor = UIColor.purple
+        rippleConfig.strokeColor = UIColor.blue
+        rippleConfig.alpha = 0.1;
         
-        return customWindow
+        return COSTouchVisualizerWindow(frame: UIScreen.main.bounds,
+                                 morphEnabled: true,
+                                 touchVisibility: .remoteAndLocal,
+                                 contactConfig: contactConfig,
+                                 rippleConfig: rippleConfig)
         }()
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        guard let window = window as? COSTouchVisualizerWindow else {
-            return false
-        }
-        window.touchVisualizerWindowDelegate = self
-        return true
-    }
-    
-    // MARK: - COSTouchVisualizerWindowDelegate
-
-    func touchVisualizerWindowShouldAlwaysShowFingertip(_ window: COSTouchVisualizerWindow!) -> Bool {
-        // Return YES to make the fingertip always display even if there's no any mirrored screen.
-        // Return NO or don't implement this method if you want to keep the fingertip display only when
-        // the device is connected to a mirrored screen.
-        return true
-    }
-
-    func touchVisualizerWindowShouldShowFingertip(_ window: COSTouchVisualizerWindow!) -> Bool {
-        // Return YES or don't implement this method to make this window show fingertip when necessary.
-        // Return NO to make this window not to show fingertip.
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         return true
     }
 }
