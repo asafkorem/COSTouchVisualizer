@@ -73,8 +73,8 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
     if (![UIScreen instancesRespondToSelector:@selector(mirroredScreen)])
         return NO;
 
-    for (UIScreen *screen in [UIScreen screens]) {
-        if ([screen mirroredScreen] != nil) {
+    for (UIScreen *screen in UIScreen.screens) {
+        if (screen.mirroredScreen != nil) {
             return YES;
         }
     }
@@ -93,8 +93,9 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
             
         case COSTouchVisualizerWindowTouchVisibilityRemoteOnly:
         case COSTouchVisualizerWindowTouchVisibilityRemoteAndLocal: {
-            self.allTouches = [event allTouches];
-            for (UITouch *touch in [self.allTouches allObjects]) {
+            self.allTouches = event.allTouches;
+            
+            for (UITouch *touch in self.allTouches.allObjects) {
                 switch (touch.phase) {
                     case UITouchPhaseBegan:
                     case UITouchPhaseMoved: {
@@ -106,7 +107,7 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
                         rippleView.center = [touch locationInView:self.overlayWindow];
                         
                         [UIView animateWithDuration:self.touchRippleConfig.fadeDuration
-                                              delay:0.0
+                                              delay:TOUCH_VISUALIZER_ZERO_DELAY
                                             options:UIViewAnimationOptionCurveEaseIn
                                          animations:^{
                                              [rippleView setAlpha:0.0];
@@ -118,7 +119,8 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
                     case UITouchPhaseStationary: {
                         COSTouchImageView *touchView = (COSTouchImageView *)[self.overlayWindow viewWithTag:touch.hash];
                         
-                        if (touch.phase != UITouchPhaseStationary && touchView != nil && [touchView isFadingOut]) {
+                        
+                        if (touch.phase != UITouchPhaseStationary && touchView != nil && touchView.isFadingOut) {
                             [self.timer invalidate];
                             [touchView removeFromSuperview];
                             touchView = nil;
@@ -140,7 +142,7 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
                                                                              repeats:YES];
                             }
                         }
-                        if (![touchView isFadingOut]) {
+                        if (!touchView.isFadingOut) {
                             touchView.alpha = self.touchContactConfig.alpha;
                             touchView.center = [touch locationInView:self.overlayWindow];
                             touchView.tag = touch.hash;
@@ -156,13 +158,11 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
                     }
                 }
             }
-            
-
             break;
         }
     }
     
-    [self scheduleFingerTipRemoval];    // We may not see all UITouchPhaseEnded/UITouchPhaseCancelled events.
+    [self _scheduleFingerTipRemoval];    // We may not see all UITouchPhaseEnded/UITouchPhaseCancelled events.
 }
 
 
@@ -171,14 +171,14 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
         _overlayWindow = [[COSOverlayVisualizerWindow alloc] initWithFrame:self.frame];
         _overlayWindow.userInteractionEnabled = NO;
         _overlayWindow.windowLevel = UIWindowLevelStatusBar;
-        _overlayWindow.backgroundColor = [UIColor clearColor];
+        _overlayWindow.backgroundColor = UIColor.clearColor;
         _overlayWindow.hidden = NO;
     }
     return _overlayWindow;
 }
 #pragma mark - Private
 
-- (void)scheduleFingerTipRemoval {
+- (void)_scheduleFingerTipRemoval {
     if (self.fingerTipRemovalScheduled) {
         return;
     }
@@ -188,19 +188,12 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
                afterDelay:0.1];
 }
 
-- (void)cancelScheduledFingerTipRemoval {
-    self.fingerTipRemovalScheduled = YES;
-    [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                             selector:@selector(removeInactiveFingerTips)
-                                               object:nil];
-}
-
 - (void)removeInactiveFingerTips {
     self.fingerTipRemovalScheduled = NO;
 
-    NSTimeInterval now = [[NSProcessInfo processInfo] systemUptime];
+    NSTimeInterval now = NSProcessInfo.processInfo.systemUptime;
     
-    for (COSTouchImageView *touchView in [self.overlayWindow subviews]) {
+    for (COSTouchImageView *touchView in self.overlayWindow.subviews) {
         if (![touchView isKindOfClass:[COSTouchImageView class]]) {
             continue;
         }
@@ -211,13 +204,13 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
     }
 
     if ([[self.overlayWindow subviews] count]) {
-        [self scheduleFingerTipRemoval];
+        [self _scheduleFingerTipRemoval];
     }
 }
 
 - (void)_removeFingerTipWithHash:(NSUInteger)hash animated:(BOOL)animated {
     COSTouchImageView *touchView = (COSTouchImageView *)[self.overlayWindow viewWithTag:hash];
-    if (touchView == nil || [touchView isFadingOut]) {
+    if (touchView == nil || touchView.isFadingOut) {
         return;
     }
 
@@ -265,14 +258,14 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 
     while (touchView != nil) {
         if ([touchView isKindOfClass:[UITableViewCell class]]) {
-            for (UIGestureRecognizer *recognizer in [touch gestureRecognizers]) {
+            for (UIGestureRecognizer *recognizer in touch.gestureRecognizers) {
                 if ([recognizer isKindOfClass:[UISwipeGestureRecognizer class]])
                     return YES;
             }
         }
 
         if ([touchView isKindOfClass:[UITableView class]] &&
-            [[touch gestureRecognizers] count] == 0) {
+            touch.gestureRecognizers.count == 0) {
             return YES;
         }
         touchView = touchView.superview;
